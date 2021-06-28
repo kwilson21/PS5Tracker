@@ -8,14 +8,14 @@ fastapi = "*"
 peewee = "*"
 rq = "*"
 uvicorn = {extras = ["standard"], version = "*"}
+pytest-mock = "*"
 
 [dev-packages]
 pytest = "*"
+install = "*"
 pre-commit = "*"
 black = "*"
-pytest-cov = "*"
 pytest-mock = "*"
-pytest-icdiff = "*"
 
 [requires]
 python_version = "3.9"
