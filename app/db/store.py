@@ -8,8 +8,7 @@ def get_user_by_id(user_id):
     user = User.get_by_id(user_id)
     if not user:
         raise Exception()
-    user_dict = model_to_dict(user)
-    del user_dict["password"]
+        
     return user
 
 def get_retailer_info_by_user_id(user_id = None, user = None):
@@ -21,7 +20,7 @@ def get_retailer_info_by_user_id(user_id = None, user = None):
         user_id = user.id
     return [info for info in user.retailer_info]
     
-def get_console_preferences_by_id(retailer_info_id = None, retailer_info = None):
+def get_console_preferences_by_id(retailer_info_id: int = None, retailer_info: RetailerInfo = None) -> list[ConsolePreference]:
     if not retailer_info_id and not retailer_info:
         raise Exception()
     elif not retailer_info:
@@ -38,4 +37,5 @@ def get_aggregate_user_by_id(user_id):
     for retailer in payload["retailers"]:
         console_preferences = get_console_preferences_by_id(retailer_info)
         retailer["console_preferences"] = model_to_dict(console_preferences)
+    del payload["password"]
     return payload
