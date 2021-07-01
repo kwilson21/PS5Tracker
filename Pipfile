@@ -11,7 +11,6 @@ uvicorn = {extras = ["standard"], version = "*"}
 
 [dev-packages]
 pytest = "*"
-install = "*"
 pre-commit = "*"
 black = "*"
 
