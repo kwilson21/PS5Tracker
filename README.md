@@ -123,12 +123,12 @@ To run the app
 ```bash
 $ cd ~/PS5Tracker
 $ pipenv shell
-$ uvicorn main:app --reload
+$ uvicorn run:app --reload
 ```
 
 or
 
 ```bash
 $ cd ~/PS5Tracker
-$ pipenv run uvicorn main:app --reload
+$ pipenv run uvicorn run:app --reload
 ```
