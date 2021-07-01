@@ -93,6 +93,12 @@ To install MySQL on Ubuntu
 $ sudo apt install mysql-server
 ```
 
+After installation, start the MySQL server:
+
+```bash
+$ sudo service mysql start
+```
+
 After installing, run the security script with `sudo`
 
 ```bash
@@ -100,12 +106,6 @@ $ sudo mysql_secure_installation
 ```
 
 This will take you through a series of prompts where you can make some changes to your MySQL installation’s security options. The first prompt will ask whether you’d like to set up the Validate Password Plugin, which can be used to test the password strength of new MySQL users before deeming them valid.
-
-After installation, start the MySQL server:
-
-```bash
-$ sudo service mysql start
-```
 
 Lastly, before running the app, you must create the database that you will use
 
