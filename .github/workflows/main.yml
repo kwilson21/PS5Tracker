@@ -22,27 +22,14 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
       - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
-
       - name: Install dependencies
-        uses: VaultVulp/action-pipenv@v2.0.1
-        with:
-          command: install --dev
-
+        run: pipenv install --dev
       - name: Run unit tests
-        uses: VaultVulp/action-pipenv@v2.0.1
-        with:
-          command: pytest
-
-      - name: Build coverage file
-        uses: VaultVulp/action-pipenv@v2.0.1
-        with:
-          command: pytest | tee pytest-coverage.txt
-
+        run: pipenv run pytest | tee pytest-coverage.txt
       - name: Pytest coverage comment
         uses: MishaKav/pytest-coverage-comment@v1.1.3
         with:
