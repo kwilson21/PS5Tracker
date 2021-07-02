@@ -33,6 +33,11 @@ jobs:
         with:
           command: install --dev
 
+      - name: Run unit tests
+        uses: VaultVulp/action-pipenv@v2.0.1
+        with:
+          command: pytest
+
       - name: Build coverage file
         uses: VaultVulp/action-pipenv@v2.0.1
         with:
