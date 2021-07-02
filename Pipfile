@@ -19,7 +19,6 @@ black = "*"
 pytest-cov = "*"
 pytest-mock = "*"
 pytest-icdiff = "*"
-pytest-redis = "*"
 
 [requires]
 python_version = "3.9"
