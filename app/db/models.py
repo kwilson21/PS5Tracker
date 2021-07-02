@@ -14,7 +14,6 @@ class BaseModel(peewee.Model):
 
 
 class User(BaseModel):
-    id = peewee.AutoField()
     username = peewee.CharField(unique=True)
     password = peewee.CharField()
     email = peewee.CharField(unique=True)
@@ -24,7 +23,6 @@ class User(BaseModel):
 
 
 class RetailerInfo(BaseModel):
-    id = peewee.AutoField()
     name = peewee.CharField()
     username = peewee.CharField()
     password = peewee.CharField()
@@ -32,7 +30,6 @@ class RetailerInfo(BaseModel):
 
 
 class ConsolePreference(BaseModel):
-    id = peewee.AutoField()
     username = peewee.CharField()
     password = peewee.CharField()
     email = peewee.CharField()

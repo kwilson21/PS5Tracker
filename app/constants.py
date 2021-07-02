@@ -1,6 +1,6 @@
 import urllib.parse
 
-import redis
+import redis  # type: ignore
 
 from app import settings
 from app.models.ps5_version import PS5Version

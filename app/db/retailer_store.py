@@ -10,7 +10,7 @@ from app.models.retailer import Retailer
 
 
 def update_retailer_availabilities(retailer: Retailer) -> bool:
-    return RETAILER_REDIS_CONN.set(retailer.name, retailer.to_json())
+    return RETAILER_REDIS_CONN.set(retailer.name, retailer.to_json())  # type: ignore
 
 
 def get_all_retailer_availabilities() -> List[Dict[str, Any]]:
@@ -25,7 +25,7 @@ def get_all_retailer_availabilities() -> List[Dict[str, Any]]:
 def get_retailer_availabilitiy(retailer_name: str) -> Optional[Retailer]:
     retailer_str = RETAILER_REDIS_CONN.get(retailer_name)
     if retailer_str:
-        return Retailer.from_json(retailer_str)
+        return Retailer.from_json(retailer_str)  # type: ignore
     return None
 
 
