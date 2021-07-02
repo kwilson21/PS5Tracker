@@ -14,7 +14,7 @@ If you haven't already, you will need to clone the `kwilson21/PS5Tracker` GitHub
 $ git clone git@github.com:kwilson21/PS5Tracker.git
 ```
 
-If you encounter an error at this point, it is likely you have not configured an SSH key with GitHub, to resolve this issue, see [Generating a new SSH key and adding it to the ssh-agent](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/) for more details
+If you encounter an error at this point, it is likely you have not configured an SSH key with GitHub, to resolve this issue, see [Generating a new SSH key and adding it to GitHub](https://askubuntu.com/questions/527551/how-to-access-a-git-repository-using-ssh) for more details
 
 ## Setting Up Your Environment
 
@@ -22,7 +22,22 @@ Getting started with PS5Tracker, you will need to install Python version 3.9 or 
 
 You can get the latest version of Python for Windows/Mac here: https://www.python.org/downloads/
 
+To install python 3.9 on Ubuntu, follow [How to install python3.9 on Ubuntu 20.04](https://linuxize.com/post/how-to-install-python-3-9-on-ubuntu-20-04/) for instructions
+
+You will also want to make sure that you have pip3 installed
+```bash
+$ sudo apt install python3.9-distutils
+$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+$ python3.9 get-pip.py
+```
+
 It is HIGHLY recommended that you use pipenv when working on this repo.
+
+Installing pipenv on Ubuntu
+
+```bash
+$ python3.9 -m pip install --user pipenv
+```
 
 Installing pipenv on Mac OS X
 
@@ -38,19 +53,6 @@ $ py -m pip install --user pipenv
 
 If pipenv isn't avaialble in your shell after installation, you'll need to add the user base's binary directory to your PATH. For more information, refer to the pipenv documentation here: [Pragmatic Installation of Pipenv](https://pipenv.kennethreitz.org/en/latest/install/#pragmatic-installation-of-pipenv)
 
-## Configuring Environment Variables
-
-To configure your environment variables for this app, create a file called `.env` in the project root directory and set the following variables accordingly
-
-```bash
-DATABASE_HOST=127.0.0.1
-DATABASE_PORT=3306
-DATABASE_NAME=test
-DATABASE_USER=root
-DATABASE_PASSWORD=1234
-APP_ENV=development
-```
-
 ## Install Required Packages
 
 If you are using pipenv and are on a dev environment
@@ -65,6 +67,19 @@ On a production environment
 ```bash
 $ cd ~/PS5Tracker
 $ pipenv install
+```
+
+## Configuring Environment Variables
+
+To configure your environment variables for this app, create a file called `.env` in the project root directory and set the following variables accordingly
+
+```bash
+DATABASE_HOST=127.0.0.1
+DATABASE_PORT=3306
+DATABASE_NAME=test
+DATABASE_USER=root
+DATABASE_PASSWORD=1234
+APP_ENV=development
 ```
 
 ### Pre commit
@@ -112,6 +127,20 @@ Lastly, before running the app, you must create the database that you will use
 ```bash
 $ sudo mysql -u root
 mysql> CREATE DATABASE test;
+```
+
+After installation, start the redis server:
+
+```bash
+$ sudo service redis-server start
+```
+
+### Installing Redis
+
+You will need to install Redis to test RQ jobs and test retailer availability code
+
+```bash
+$ sudo apt install redis-server
 ```
 
 ## Running the App
