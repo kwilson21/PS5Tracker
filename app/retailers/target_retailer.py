@@ -18,9 +18,9 @@ class TargetRetailer(Retailer):
 
     def get_availability(self, ps5_version: PS5Version) -> Availability:
         with driver_ctx() as driver:
-            if ps5_version == PS5Version.DISC:
+            if ps5_version is PS5Version.DISC:
                 driver.get(self.DISC_VERSION_URL)
-            elif ps5_version == PS5Version.DIGITAL:
+            elif ps5_version is PS5Version.DIGITAL:
                 driver.get(self.DIGITAL_VERSION_URL)
 
             price_element = driver.find_element_by_xpath(
