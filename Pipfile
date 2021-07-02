@@ -11,6 +11,8 @@ uvicorn = {extras = ["standard"], version = "*"}
 selenium = "*"
 redis = "*"
 dataclasses-json = "*"
+rq-scheduler = "*"
+types-redis = "*"
 
 [dev-packages]
 pytest = "*"
@@ -19,6 +21,7 @@ black = "*"
 pytest-cov = "*"
 pytest-mock = "*"
 pytest-icdiff = "*"
+mypy = "*"
 
 [requires]
 python_version = "3.9"

@@ -1,5 +1,5 @@
 # PS5Tracker
- 
+
 This is the PS5 Tracker server. The server is designed to handle retailer availabilities and auto purchasing a PS5.
 
 ## Getting Started
