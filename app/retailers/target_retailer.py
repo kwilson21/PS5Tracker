@@ -22,6 +22,8 @@ class TargetRetailer(Retailer):
                 driver.get(self.DISC_VERSION_URL)
             elif ps5_version is PS5Version.DIGITAL:
                 driver.get(self.DIGITAL_VERSION_URL)
+            else:
+                raise ValueError(f"Incorrect ps5 version {ps5_version}")
 
             price_element = driver.find_element_by_xpath(
                 '//*[@id="viewport"]/div[4]/div/div[2]/div[2]/div[1]/div[1]/div[1]/div'
