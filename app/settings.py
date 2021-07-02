@@ -1,3 +1,5 @@
+from shutil import which
+
 from starlette.config import Config
 from starlette.datastructures import CommaSeparatedStrings
 
@@ -13,3 +15,6 @@ HOST = config("HOST", default="localhost")
 PORT = config("PORT", cast=int, default=8000)
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=CommaSeparatedStrings, default="127.0.0.1,localhost")
 APP_ENV = config("APP_ENV", default="development")
+SELENIUM_DRIVER_EXECUTABLE_PATH = config("SELENIUM_DRIVER_EXECUTABLE_PATH", default=which("chromedriver.exe"))
+SELENIUM_DRIVER_ARGUMENTS = "headless"
+CHROME_BINARY_LOCATION = "C:\Program Files\Google\Chrome\Application\chrome.exe"
