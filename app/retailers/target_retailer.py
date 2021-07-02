@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from app.db.models import RetailerInfo
 from app.models.availability import Availability
 from app.models.ps5_version import PS5Version
@@ -28,7 +30,7 @@ class TargetRetailer(Retailer):
 
             stock_status = StockStatus.OUT_OF_STOCK if stock_element.text == "Sold out" else StockStatus.IN_STOCK
 
-        return Availability(version=ps5_version, stock_status=stock_status, price=price)
+        return Availability(version=ps5_version, stock_status=stock_status, price=price, updated_at=datetime.now())
 
     def attempt_purchase(self, retailer_info: RetailerInfo, price: str) -> bool:
         raise NotImplementedError()
