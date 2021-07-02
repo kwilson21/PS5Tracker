@@ -6,9 +6,9 @@ from starlette.datastructures import CommaSeparatedStrings
 config = Config(".env")
 
 DEBUG = config("DEBUG", cast=bool, default=False)
-DB_NAME = config("DATABASE_NAME")
-DB_USER = config("DATABASE_USER")
-DB_PASS = config("DATABASE_PASSWORD")
+DB_NAME = config("DATABASE_NAME", default="PS5Tracker")
+DB_USER = config("DATABASE_USER", default="root")
+DB_PASS = config("DATABASE_PASSWORD", cast=int, default=1234)
 DB_HOST = config("DATABASE_HOST", default="localhost")
 DB_PORT = config("DATABASE_PORT", cast=int, default=3306)
 HOST = config("HOST", default="localhost")

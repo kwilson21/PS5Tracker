@@ -30,7 +30,7 @@ def get_retailer_availabilitiy(retailer_name: str) -> Optional[Retailer]:
 
 
 def delete_retailer_availabilitiy(retailer_name: str) -> bool:
-    return RETAILER_REDIS_CONN.delete(retailer_name)
+    return bool(RETAILER_REDIS_CONN.delete(retailer_name))
 
 
 def delete_all_retailer_availabilities() -> bool:
