@@ -18,3 +18,5 @@ APP_ENV = config("APP_ENV", default="development")
 SELENIUM_DRIVER_EXECUTABLE_PATH = config("SELENIUM_DRIVER_EXECUTABLE_PATH", default=which("chromedriver.exe"))
 SELENIUM_DRIVER_ARGUMENTS = "headless"
 CHROME_BINARY_LOCATION = "C:\Program Files\Google\Chrome\Application\chrome.exe"
+REDIS_HOST = config("REDIS_HOST", default="localhost")
+REDIS_PORT = config("REDIS_PORT", cast=int, default=6379)

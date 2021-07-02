@@ -9,6 +9,7 @@ peewee = "*"
 rq = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 selenium = "*"
+redis = "*"
 
 [dev-packages]
 pytest = "*"
