@@ -22,6 +22,7 @@ pytest-cov = "*"
 pytest-mock = "*"
 pytest-icdiff = "*"
 mypy = "*"
+fakeredis = "*"
 
 [requires]
 python_version = "3.9"
