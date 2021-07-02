@@ -8,6 +8,7 @@ fastapi = "*"
 peewee = "*"
 rq = "*"
 uvicorn = {extras = ["standard"], version = "*"}
+selenium = "*"
 
 [dev-packages]
 pytest = "*"
