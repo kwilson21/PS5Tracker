@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "9a59e76f4c65425a89f52bfa8099e676af585abed061426fbb96ddd67081bee5"
+            "sha256": "41f949d26547d2c0bb773692aef6ef81b352876d75728480824beb813b1001c8"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -117,6 +117,14 @@
             ],
             "markers": "platform_system == 'Windows'",
             "version": "==0.4.4"
+        },
+        "croniter": {
+            "hashes": [
+                "sha256:0f97b361fe343301a8f66f852e7d84e4fb7f21379948f71e1bbfe10f5d015fbd",
+                "sha256:a70dfc9d52de9fc1a886128b9148c89dd9e76b67d55f46516ca94d2d73d58219"
+            ],
+            "markers": "python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "version": "==1.0.15"
         },
         "cryptography": {
             "hashes": [
@@ -266,6 +274,14 @@
             ],
             "version": "==20.0.1"
         },
+        "python-dateutil": {
+            "hashes": [
+                "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c",
+                "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"
+            ],
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "version": "==2.8.1"
+        },
         "python-dotenv": {
             "hashes": [
                 "sha256:dd8fe852847f4fbfadabf6183ddd4c824a9651f02d51714fa075c95561959c7d",
@@ -322,6 +338,14 @@
             ],
             "index": "pypi",
             "version": "==1.9.0"
+        },
+        "rq-scheduler": {
+            "hashes": [
+                "sha256:da94e9b6badf112995ff38fe16192e4f4c43c412b3c9614684ed8c8f7ca517d2",
+                "sha256:db79bb56cdbc4f7ffdd8bd659e389e91aa0db9c1abf002dc46f5dd6f0dbd2910"
+            ],
+            "index": "pypi",
+            "version": "==0.11.0"
         },
         "selenium": {
             "hashes": [

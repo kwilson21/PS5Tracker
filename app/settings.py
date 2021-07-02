@@ -20,3 +20,4 @@ SELENIUM_DRIVER_ARGUMENTS = "headless"
 CHROME_BINARY_LOCATION = "C:\Program Files\Google\Chrome\Application\chrome.exe"
 REDIS_HOST = config("REDIS_HOST", default="localhost")
 REDIS_PORT = config("REDIS_PORT", cast=int, default=6379)
+REDIS_URL = config("REDIS_URL", default=None)

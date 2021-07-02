@@ -11,6 +11,7 @@ uvicorn = {extras = ["standard"], version = "*"}
 selenium = "*"
 redis = "*"
 dataclasses-json = "*"
+rq-scheduler = "*"
 
 [dev-packages]
 pytest = "*"
