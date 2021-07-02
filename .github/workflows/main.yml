@@ -31,8 +31,4 @@ jobs:
       - name: Install dependencies
         run: pipenv install --dev
       - name: Run unit tests
-        run: pipenv run pytest | tee pytest-coverage.txt
-      - name: Pytest coverage comment
-        uses: MishaKav/pytest-coverage-comment@v1.1.3
-        with:
-          pytest-coverage-path: ./pytest-coverage.txt
+        run: pipenv run pytest
