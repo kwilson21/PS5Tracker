@@ -1,11 +1,14 @@
 import peewee
+from playhouse.db_url import connect
 
 from app import settings
 
-
-mysql_db = peewee.MySQLDatabase(
-    settings.DB_NAME, user=settings.DB_USER, password=settings.DB_PASS, host=settings.DB_HOST, port=settings.DB_PORT
-)
+if settings.DB_URL:
+    mysql_db = connect(settings.DB_URL)
+else:
+    mysql_db = peewee.MySQLDatabase(
+        settings.DB_NAME, user=settings.DB_USER, password=settings.DB_PASS, host=settings.DB_HOST, port=settings.DB_PORT
+    )
 
 
 class BaseModel(peewee.Model):
