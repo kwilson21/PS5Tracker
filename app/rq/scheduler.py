@@ -7,5 +7,7 @@ from app.rq.jobs import all_jobs
 
 scheduler = Scheduler(connection=RQ_REDIS_CONN)
 
-for job in all_jobs:
-    scheduler.schedule(scheduled_time=datetime.utcnow(), func=job, interval=1200)  # Run every 30 minutes
+
+def schedule_periodic_jobs():
+    for job in all_jobs:
+        scheduler.schedule(scheduled_time=datetime.utcnow(), func=job, interval=1200)  # Run every 30 minutes
