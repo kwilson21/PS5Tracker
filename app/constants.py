@@ -18,9 +18,9 @@ else:
     PASSWORD = None
 
 
-RETAILER_REDIS_CONN = redis.Redis(host=HOST, port=PORT, db=0, password=PASSWORD)
+RETAILER_REDIS_CONN = redis.Redis(host=HOST, port=PORT, password=PASSWORD)
 
-RQ_REDIS_CONN = redis.Redis(host=HOST, port=PORT, db=1, password=PASSWORD)
+RQ_REDIS_CONN = redis.Redis(host=HOST, port=PORT, password=PASSWORD)
 
 
 TARGET_RETAILER = "Target"
