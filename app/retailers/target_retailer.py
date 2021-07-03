@@ -1,6 +1,10 @@
 from datetime import datetime
 from typing import List
 
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+
 from app.constants import PS5_VERSIONS
 from app.constants import TARGET_RETAILER
 from app.db.models import RetailerInfo
@@ -25,14 +29,14 @@ class TargetRetailer(Retailer):
             else:
                 raise ValueError(f"Incorrect ps5 version {ps5_version}")
 
-            price_element = driver.find_element_by_xpath(
-                '//*[@id="viewport"]/div[4]/div/div[2]/div[2]/div[1]/div[1]/div[1]/div'
-            )
-            price = price_element.text
+            price_xpath = '//*[@id="viewport"]/div[4]/div/div[2]/div[2]/div[1]/div[1]/div[1]/div'
+            stock_xpath = '//*[@id="viewport"]/div[4]/div/div[2]/div[3]/div[1]/div/div/div'
 
-            stock_element = driver.find_element_by_xpath(
-                '//*[@id="viewport"]/div[4]/div/div[2]/div[3]/div[1]/div/div/div'
-            )
+            price_element = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, price_xpath)))
+
+            price = price_element.text.replace("$", "")
+
+            stock_element = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, stock_xpath)))
 
             stock_status = StockStatus.OUT_OF_STOCK if stock_element.text == "Sold out" else StockStatus.IN_STOCK
 

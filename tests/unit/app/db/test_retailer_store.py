@@ -51,24 +51,24 @@ def test_get_all_retailer_availabilities(mocker: MockerFixture, retailer: Retail
     assert result == [json.loads(retailer.to_json())]  # type: ignore
 
 
-def test_get_retailer_availabilitiy(mocker: MockerFixture, retailer: Retailer) -> None:
+def test_get_retailer_availability(mocker: MockerFixture, retailer: Retailer) -> None:
     r = fakeredis.FakeStrictRedis()
     mocker.patch("app.db.retailer_store.RETAILER_REDIS_CONN", r)
 
     r.set(retailer.name, retailer.to_json())  # type: ignore
 
-    result = retailer_store.get_retailer_availabilitiy(TARGET_RETAILER)
+    result = retailer_store.get_retailer_availability(TARGET_RETAILER)
 
     assert result == retailer
 
 
-def test_delete_retailer_availabilitiy(mocker: MockerFixture, retailer: Retailer) -> None:
+def test_delete_retailer_availability(mocker: MockerFixture, retailer: Retailer) -> None:
     r = fakeredis.FakeStrictRedis()
     mocker.patch("app.db.retailer_store.RETAILER_REDIS_CONN", r)
 
     r.set(retailer.name, retailer.to_json())  # type: ignore
 
-    result = retailer_store.delete_retailer_availabilitiy(TARGET_RETAILER)
+    result = retailer_store.delete_retailer_availability(TARGET_RETAILER)
 
     assert result is True
     assert r.get(retailer.name) is None
