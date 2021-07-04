@@ -31,3 +31,7 @@ def sms_retailer_availabilities(retailer: RetailerModel, numbers_to_text: List[s
             ],
         },
     )
+
+
+def email_retailer_availabilities(email: str) -> None:
+    pass

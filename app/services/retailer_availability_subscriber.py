@@ -7,8 +7,7 @@ from app.constants import RETAILER_REDIS_CONN
 from app.db.models import User
 from app.models.ps5_version import PS5Version
 from app.models.retailer import Retailer as RetailerModel
-from app.services.email_availability_notification import email_retailer_availabilities
-from app.services.sms_availability_notification import sms_retailer_availabilities
+from app.services import notifications
 
 
 def _retailer_availability_handler(message: str) -> None:
@@ -33,10 +32,10 @@ def _retailer_availability_handler(message: str) -> None:
 
     while phone_numbers[:]:
         numbers_to_text, phone_numbers = phone_numbers[:300], phone_numbers[300:]
-        sms_jobs.append(gevent.spawn(sms_retailer_availabilities, retailer, numbers_to_text))
+        sms_jobs.append(gevent.spawn(notifications.sms_retailer_availabilities, retailer, numbers_to_text))
 
     for email in emails:
-        email_jobs.append(gevent.spawn(email_retailer_availabilities, email))
+        email_jobs.append(gevent.spawn(notifications.email_retailer_availabilities, email))
 
     for email_job in email_jobs:
         email_job.join()
