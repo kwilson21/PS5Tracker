@@ -12,7 +12,6 @@ selenium = "*"
 redis = "*"
 dataclasses-json = "*"
 rq-scheduler = "*"
-types-redis = "*"
 gevent = "*"
 requests = "*"
 
