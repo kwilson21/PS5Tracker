@@ -36,3 +36,7 @@ class ConsolePreference(BaseModel):
     ps5_version = peewee.CharField()
     price = peewee.CharField()
     retailer_info = peewee.ForeignKeyField(RetailerInfo, backref="console_preferences")
+
+
+def create_tables() -> None:
+    mysql_db.create_tables([User, RetailerInfo, ConsolePreference])

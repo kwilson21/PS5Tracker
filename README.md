@@ -11,7 +11,7 @@ These instructions will get you a copy of the project up and running on your loc
 If you haven't already, you will need to clone the `kwilson21/PS5Tracker` GitHub repository to your local machine. This can be accomplished by running the following:
 
 ```bash
-$ git clone git@github.com:kwilson21/PS5Tracker.git
+git clone git@github.com:kwilson21/PS5Tracker.git
 ```
 
 If you encounter an error at this point, it is likely you have not configured an SSH key with GitHub, to resolve this issue, see [Generating a new SSH key and adding it to GitHub](https://askubuntu.com/questions/527551/how-to-access-a-git-repository-using-ssh) for more details
@@ -26,9 +26,9 @@ To install python 3.9 on Ubuntu, follow [How to install python3.9 on Ubuntu 20.0
 
 You will also want to make sure that you have pip3 installed
 ```bash
-$ sudo apt install python3.9-distutils
-$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-$ python3.9 get-pip.py
+sudo apt install python3.9-distutils
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python3.9 get-pip.py
 ```
 
 It is HIGHLY recommended that you use pipenv when working on this repo.
@@ -36,19 +36,19 @@ It is HIGHLY recommended that you use pipenv when working on this repo.
 Installing pipenv on Ubuntu
 
 ```bash
-$ python3.9 -m pip install --user pipenv
+python3.9 -m pip install --user pipenv
 ```
 
 Installing pipenv on Mac OS X
 
 ```bash
-$ brew install pipenv
+brew install pipenv
 ```
 
 Otherwise use pip to install pipenv
 
 ```bash
-$ py -m pip install --user pipenv
+py -m pip install --user pipenv
 ```
 
 If pipenv isn't avaialble in your shell after installation, you'll need to add the user base's binary directory to your PATH. For more information, refer to the pipenv documentation here: [Pragmatic Installation of Pipenv](https://pipenv.kennethreitz.org/en/latest/install/#pragmatic-installation-of-pipenv)
@@ -58,15 +58,15 @@ If pipenv isn't avaialble in your shell after installation, you'll need to add t
 If you are using pipenv and are on a dev environment
 
 ```bash
-$ cd ~/PS5Tracker
-$ pipenv install --dev
+cd ~/PS5Tracker
+pipenv install --dev
 ```
 
 On a production environment
 
 ```bash
-$ cd ~/PS5Tracker
-$ pipenv install
+cd ~/PS5Tracker
+pipenv install
 ```
 
 ## Configuring Environment Variables
@@ -105,19 +105,19 @@ Once you have Ubuntu installed on your Windows machine, open a bash terminal
 To install MySQL on Ubuntu
 
 ```bash
-$ sudo apt install mysql-server
+sudo apt install mysql-server
 ```
 
 After installation, start the MySQL server:
 
 ```bash
-$ sudo service mysql start
+sudo service mysql start
 ```
 
 After installing, run the security script with `sudo`
 
 ```bash
-$ sudo mysql_secure_installation
+sudo mysql_secure_installation
 ```
 
 This will take you through a series of prompts where you can make some changes to your MySQL installation’s security options. The first prompt will ask whether you’d like to set up the Validate Password Plugin, which can be used to test the password strength of new MySQL users before deeming them valid.
@@ -125,14 +125,14 @@ This will take you through a series of prompts where you can make some changes t
 Lastly, before running the app, you must create the database that you will use
 
 ```bash
-$ sudo mysql -u root
+sudo mysql -u root -p
 mysql> CREATE DATABASE test;
 ```
 
-After installation, start the redis server:
+If you are getting permission denied errors in the app when trying to connect to the db using root, use the following command to fix the issue (set the password to whatever you like)
 
 ```bash
-$ sudo service redis-server start
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1234';
 ```
 
 ### Installing Redis
@@ -140,7 +140,13 @@ $ sudo service redis-server start
 You will need to install Redis to test RQ jobs and test retailer availability code
 
 ```bash
-$ sudo apt install redis-server
+sudo apt install redis-server
+```
+
+After installation, start the redis server:
+
+```bash
+sudo service redis-server start
 ```
 
 ## Running the App
@@ -150,14 +156,14 @@ Once you have MySQL installed and your pipenv environment set up, you are now re
 To run the app
 
 ```bash
-$ cd ~/PS5Tracker
-$ pipenv shell
-$ uvicorn run:app --reload
+cd ~/PS5Tracker
+pipenv shell
+uvicorn run:app --reload
 ```
 
 or
 
 ```bash
-$ cd ~/PS5Tracker
-$ pipenv run uvicorn run:app --reload
+cd ~/PS5Tracker
+pipenv run uvicorn run:app --reload
 ```

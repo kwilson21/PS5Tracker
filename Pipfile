@@ -14,6 +14,7 @@ dataclasses-json = "*"
 rq-scheduler = "*"
 gevent = "*"
 requests = "*"
+pymysql = "*"
 
 [dev-packages]
 pytest = "*"
