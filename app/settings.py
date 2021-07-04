@@ -22,3 +22,5 @@ CHROME_BINARY_LOCATION = which("google-chrome") or "C:\\Program Files\\Google\\C
 REDIS_HOST = config("REDIS_HOST", default="localhost")
 REDIS_PORT = config("REDIS_PORT", cast=int, default=6379)
 REDIS_URL = config("REDISTOGO_URL", default=None)
+TILL_URL = config("TILL_URL", default="localhost")
+URL = config("URL", default="localhost")

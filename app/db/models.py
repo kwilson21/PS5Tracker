@@ -33,10 +33,6 @@ class RetailerInfo(BaseModel):
 
 
 class ConsolePreference(BaseModel):
-    username = peewee.CharField()
-    password = peewee.CharField()
-    email = peewee.CharField()
-    phone_number = peewee.CharField()
-    notify_by_sms = peewee.BooleanField()
-    notify_by_email = peewee.BooleanField()
+    ps5_version = peewee.CharField()
+    price = peewee.CharField()
     retailer_info = peewee.ForeignKeyField(RetailerInfo, backref="console_preferences")

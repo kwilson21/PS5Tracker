@@ -13,6 +13,8 @@ redis = "*"
 dataclasses-json = "*"
 rq-scheduler = "*"
 types-redis = "*"
+gevent = "*"
+requests = "*"
 
 [dev-packages]
 pytest = "*"
