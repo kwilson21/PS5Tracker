@@ -28,8 +28,8 @@ def _retailer_availability_handler(message: str) -> None:
                 if retailer_info.user.notify_by_email:
                     emails.append(retailer_info.user.email)
 
-    sms_jobs = []
-    email_jobs = []
+    sms_jobs: gevent.Greenlet = []
+    email_jobs: gevent.Greenlet = []
 
     while phone_numbers[:]:
         numbers_to_text, phone_numbers = phone_numbers[:300], phone_numbers[300:]
