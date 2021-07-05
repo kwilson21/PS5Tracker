@@ -17,6 +17,9 @@ To set up WSL in Windows 10/11, follow these instructions to get WSL set up on y
 If you haven't already, you will need to clone the `kwilson21/PS5Tracker` GitHub repository to your local machine. This can be accomplished by running the following:
 
 ```bash
+cd
+mkdir repos
+cd repos
 git clone git@github.com:kwilson21/PS5Tracker.git
 ```
 
@@ -64,14 +67,14 @@ If pipenv isn't avaialble in your shell after installation, you'll need to add t
 If you are using pipenv and are on a dev environment
 
 ```bash
-cd ~/PS5Tracker
+cd ~/repos/PS5Tracker
 pipenv install --dev
 ```
 
 On a production environment
 
 ```bash
-cd ~/PS5Tracker
+cd ~/repos/PS5Tracker
 pipenv install
 ```
 
@@ -156,19 +159,28 @@ sudo service redis-server start
 
 ## Running the App
 
-Once you have MySQL installed and your pipenv environment set up, you are now ready to run the app and start developing.
+Once your development environment is set up, you are now ready to run the app and start developing.
 
-To run the app
+Start the webserver
 
 ```bash
-cd ~/PS5Tracker
+cd ~/repos/PS5Tracker
 pipenv shell
 uvicorn run:app --reload
 ```
 
-or
+Start the RQ worker
 
 ```bash
-cd ~/PS5Tracker
-pipenv run uvicorn run:app --reload
+cd ~/repos/PS5Tracker
+pipenv shell
+python run-worker-default.py
+```
+
+Start RQ scheduler
+
+```bash
+cd ~/repos/PS5Tracker
+pipenv shell
+rqscheduler
 ```
