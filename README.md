@@ -166,21 +166,9 @@ Start the webserver
 ```bash
 cd ~/repos/PS5Tracker
 pipenv shell
-uvicorn run:app --reload
+honcho start
 ```
 
-Start the RQ worker
+## Deploying
 
-```bash
-cd ~/repos/PS5Tracker
-pipenv shell
-python run-worker-default.py
-```
-
-Start RQ scheduler
-
-```bash
-cd ~/repos/PS5Tracker
-pipenv shell
-rqscheduler
-```
+The app is already pre-configured to be deployed using Heroku. You can check out their documentation for setting up a Python app [here](https://devcenter.heroku.com/articles/getting-started-with-python)
