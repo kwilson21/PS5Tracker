@@ -15,6 +15,7 @@ rq-scheduler = "*"
 gevent = "*"
 requests = "*"
 pymysql = "*"
+honcho = "*"
 
 [dev-packages]
 pytest = "*"
