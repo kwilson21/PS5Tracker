@@ -157,6 +157,17 @@ After installation, start the redis server:
 sudo service redis-server start
 ```
 
+### Install Google Chrome and ChromeDriver
+
+The PS5's retailer services relies on Selenium to scrape PS5 availabilities from websites. To do this, it uses Chrome in headless mode. Because of this, we must ensure our environment has Google Chrome and Chromedriver installed so that Selenium can find them.
+
+I created a script to make this process easy
+
+```bash
+cd ~/repos/PS5Tracker
+sudo bash setup-chrome.sh
+```
+
 ## Running the App
 
 Once your development environment is set up, you are now ready to run the app and start developing.
