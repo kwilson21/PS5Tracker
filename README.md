@@ -6,6 +6,12 @@ This is the PS5 Tracker server. The server is designed to handle retailer availa
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
+## Setting Up WSL
+
+If you are a Windows user, I highly suggest setting up WSL and using Ubuntu as your OS. This is because some libraries that we use for this repo do not work in a Windows environment.
+
+To set up WSL in Windows 10/11, follow these instructions to get WSL set up on your Windows machine: [Windows Subsystem for Linux Installation Guide for Windows 10](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+
 ## Cloning the Repository
 
 If you haven't already, you will need to clone the `kwilson21/PS5Tracker` GitHub repository to your local machine. This can be accomplished by running the following:
@@ -96,8 +102,6 @@ pre-commit install
 
 To install MySQL on Windows, simply follow this links: [MySQL Installer 8.0.18](https://dev.mysql.com/downloads/installer/)
 
-If you prefer to install MySQL via WSL for linux like me, follow these instructions to get WSL set up on your Windows machine: [Windows Subsystem for Linux Installation Guide for Windows 10](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
-
 If you decide to set up WSL, I suggest using Ubuntu 20.04LTS for your flavor of linux. You can follow [this](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04) guide to setup mysql-server on Ubuntu or follow my instructions below
 
 Once you have Ubuntu installed on your Windows machine, open a bash terminal
@@ -132,7 +136,8 @@ mysql> CREATE DATABASE test;
 If you are getting permission denied errors in the app when trying to connect to the db using root, use the following command to fix the issue (set the password to whatever you like)
 
 ```bash
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1234';
+sudo myswl -u root -p
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1234';
 ```
 
 ### Installing Redis
