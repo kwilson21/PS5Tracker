@@ -12,7 +12,9 @@ selenium = "*"
 redis = "*"
 dataclasses-json = "*"
 rq-scheduler = "*"
-types-redis = "*"
+gevent = "*"
+requests = "*"
+pymysql = "*"
 
 [dev-packages]
 pytest = "*"
@@ -23,6 +25,7 @@ pytest-mock = "*"
 pytest-icdiff = "*"
 mypy = "*"
 fakeredis = "*"
+flake8 = "*"
 
 [requires]
 python_version = "3.9"
