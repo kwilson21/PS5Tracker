@@ -23,7 +23,7 @@ def sms_retailer_availabilities(retailer: RetailerModel, phone_number: str) -> N
 
     client.messages.create(
         body=text_str,
-        from_="+17708572635",
+        from_=settings.TWILIO_PHONE_NUMBER,
         status_callback=f"{settings.URL}/purchase-attempt-sms-response",
         to=phone_number,
     )
