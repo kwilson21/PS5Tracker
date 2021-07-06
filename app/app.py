@@ -13,6 +13,7 @@ app.include_router(retailers.router)
 @app.on_event("startup")
 async def startup_event():
     schedule_periodic_jobs()
+    drop_tables()
     create_tables()
 
 

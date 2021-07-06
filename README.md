@@ -146,7 +146,7 @@ mysql> CREATE DATABASE test;
 If you are getting permission denied errors in the app when trying to connect to the db using root, use the following command to fix the issue (set the password to whatever you like)
 
 ```bash
-sudo myswl -u root -p
+sudo mysql -u root -p
 mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1234';
 ```
 
@@ -186,6 +186,25 @@ cd ~/repos/PS5Tracker
 pipenv shell
 honcho start
 ```
+
+## Running a task
+
+Once you have the app up and running, you can test out RQ by running a task
+
+```python
+from app.rq.jobs import update_retailer_availabilities
+from app.constants import RQ_REDIS_CONN, TARGET_RETAILER
+from rq import Queue
+
+q = Queue(connection=RQ_REDIS_CONN)
+q.enqueue(update_retailer_availabilities, args=(TARGET_RETAILER))
+```
+
+This task will get PS5 availabilities from the target website, and store the results in memory.
+
+After updating retailer availabilities, you can query the API to get retailer availabilities by going to http://localhost:5000/docs
+
+![FastAPI](https://i.imgur.com/ZqR1IWb.png)
 
 ## Deploying
 
