@@ -40,3 +40,31 @@ class ConsolePreference(BaseModel):
 
 def create_tables() -> None:
     mysql_db.create_tables([User, RetailerInfo, ConsolePreference])
+
+    if settings.APP_ENV == "development":
+        user = User.create(
+            username="test",
+            email=settings.TEST_EMAIL,
+            phone_number=settings.TEST_PHONE_NUMBER,
+            notify_by_sms=bool(settings.TEST_EMAIL),
+            notify_by_email=settings.TEST_PHONE_NUMBER,
+        )
+
+        user.save()
+
+        retailer_info = RetailerInfo.create(name="Target", user=user)
+
+        retailer_info.save()
+
+        console_preference = ConsolePreference.create(
+            ps5_version="DIGITAL", price="399.99", retailer_info=retailer_info
+        )
+        console_preference_2 = ConsolePreference.create(ps5_version="DISC", price="499.99", retailer_info=retailer_info)
+
+        console_preference.save()
+        console_preference_2.save()
+
+
+def drop_tables() -> None:
+    if settings.APP_ENV == "development":
+        mysql_db.drop_tables([User, RetailerInfo, ConsolePreference])

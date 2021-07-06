@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 from app.db.models import create_tables
+from app.db.models import drop_tables
 from app.routes import retailers
 from app.rq.scheduler import schedule_periodic_jobs
 from app.services.retailer_availability_subscriber import thread
@@ -17,6 +18,7 @@ async def startup_event():
 
 @app.on_event("shutdown")
 async def shutdown_event():
+    drop_tables()
     thread.stop()
 
 

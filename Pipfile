@@ -13,9 +13,9 @@ redis = "*"
 dataclasses-json = "*"
 rq-scheduler = "*"
 gevent = "*"
-requests = "*"
 pymysql = "*"
 honcho = "*"
+twilio = "*"
 
 [dev-packages]
 pytest = "*"
