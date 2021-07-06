@@ -42,11 +42,11 @@ class TargetRetailer(Retailer):
 
         return Availability(version=ps5_version, stock_status=stock_status, price=price, updated_at=datetime.now())
 
-    def get_availabilties(self) -> List[Availability]:
+    def get_availabilities(self) -> List[Availability]:
         return [self.get_availability(ps5_version) for ps5_version in PS5_VERSIONS]
 
     def get_retailer_availabilities(self) -> RetailerModel:
-        retailer = RetailerModel(name=TARGET_RETAILER, availabilities=self.get_availabilties())
+        retailer = RetailerModel(name=TARGET_RETAILER, availabilities=self.get_availabilities())
 
         return retailer
 

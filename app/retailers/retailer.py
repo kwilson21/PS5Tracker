@@ -14,7 +14,7 @@ class Retailer(ABC):
         pass
 
     @abstractmethod
-    def get_availabilties(self) -> List[Availability]:
+    def get_availabilities(self) -> List[Availability]:
         pass
 
     @abstractmethod
