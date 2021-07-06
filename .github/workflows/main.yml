@@ -30,6 +30,8 @@ jobs:
         run: pip install pipenv
       - name: Install dependencies
         run: pipenv install --dev
+      - name: Run unit tests
+        run: pipenv run pytest
       - name: Build coverage file
         run: |
           pipenv run pytest --cache-clear > pytest-coverage.txt
