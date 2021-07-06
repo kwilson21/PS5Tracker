@@ -19,7 +19,7 @@ def sms_retailer_availabilities(retailer: RetailerModel, phone_number: str) -> N
         responses.append(f"Purchase {availability.version.value}")
 
     text_str += "\n\nWould you like to attempt to automatically purchase a console?"
-    text_str += '\nReply with "Yes" or "No"'
+    text_str += '\n\nReply with "Yes" or "No"'
 
     client.messages.create(
         body=text_str,
