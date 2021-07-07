@@ -19,6 +19,7 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=CommaSeparatedStrings, default="127
 APP_ENV = config("APP_ENV", default="development")
 CHROME_DRIVER_EXECUTABLE_PATH = config("CHROME_DRIVER_EXECUTABLE_PATH", default=which("chromedriver"))
 CHROME_BINARY_LOCATION = which("google-chrome") or "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+WEB_DRIVER = config("WEB_DRIVER", default="firefox")
 REDIS_HOST = config("REDIS_HOST", default="localhost")
 REDIS_PORT = config("REDIS_PORT", cast=int, default=6379)
 REDIS_URL = config("REDISTOGO_URL", default=None)

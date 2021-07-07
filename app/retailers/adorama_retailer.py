@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-from app.constants import TARGET_RETAILER
+from app.constants import ADORAMA_RETAILER
 from app.db.models import RetailerInfo
 from app.models.availability import Availability
 from app.models.ps5_version import PS5Version
@@ -15,9 +15,9 @@ from app.retailers.retailer import Retailer
 from app.services.web_driver import driver_ctx
 
 
-class TargetRetailer(Retailer):
-    DISC_VERSION_URL = "https://www.target.com/p/playstation-5-console/-/A-81114595#lnk=sametab"
-    DIGITAL_VERSION_URL = "https://www.target.com/p/playstation-5-digital-edition-console/-/A-81114596#lnk=sametab"
+class AdoramaRetailer(Retailer):
+    DISC_VERSION_URL = "https://www.adorama.com/so3005718.html"
+    DIGITAL_VERSION_URL = "https://www.adorama.com/so3005719.html"
 
     @property
     def offered_versions(self) -> List[PS5Version]:
@@ -32,8 +32,8 @@ class TargetRetailer(Retailer):
             else:
                 raise ValueError(f"Incorrect ps5 version {ps5_version}")
 
-            price_xpath = '//*[@id="viewport"]/div[4]/div/div[2]/div[2]/div[1]/div[1]/div[1]/div'
-            stock_xpath = '//*[@id="viewport"]/div[4]/div/div[2]/div[3]/div[1]/div/div/div'
+            price_xpath = '//*[@id="product-container"]/section/div[2]/form/section/div[1]/div[1]/div/strong'
+            stock_xpath = '//*[@id="SO3005718_btn"]'
 
             price_element = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, price_xpath)))
 
@@ -41,7 +41,12 @@ class TargetRetailer(Retailer):
 
             stock_element = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, stock_xpath)))
 
-            stock_status = StockStatus.OUT_OF_STOCK if "Sold out" in stock_element.text else StockStatus.IN_STOCK
+            if "Temporarily not available" in stock_element.text:
+                stock_status = StockStatus.OUT_OF_STOCK
+            elif "Add to Cart" in stock_element.text:
+                stock_status = StockStatus.IN_STOCK
+            else:
+                raise Exception(f"Unknown stock status {stock_element.text=}")
 
         return Availability(version=ps5_version, stock_status=stock_status, price=price, updated_at=datetime.now())
 
@@ -49,7 +54,7 @@ class TargetRetailer(Retailer):
         return [self.get_availability(ps5_version) for ps5_version in self.offered_versions]
 
     def get_retailer_availabilities(self) -> RetailerModel:
-        retailer = RetailerModel(name=TARGET_RETAILER, availabilities=self.get_availabilities())
+        retailer = RetailerModel(name=ADORAMA_RETAILER, availabilities=self.get_availabilities())
 
         return retailer
 

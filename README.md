@@ -31,13 +31,22 @@ Getting started with PS5Tracker, you will need to install Python version 3.9 or 
 
 You can get the latest version of Python for Windows/Mac here: https://www.python.org/downloads/
 
-To install python 3.9 on Ubuntu, follow [How to install python3.9 on Ubuntu 20.04](https://linuxize.com/post/how-to-install-python-3-9-on-ubuntu-20-04/) for instructions
+On Ubuntu, it is recommended that you use pyenv to manage your python versions
 
-You will also want to make sure that you have pip3 installed
+To install pyenv
+
 ```bash
-sudo apt install python3.9-distutils
-curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-python3.9 get-pip.py
+curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+```
+
+```bash
+echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.profile; . ~/.profile
+```
+
+Install python 3.9.6 (to see other python versions you can install, use `pyenv install --list`)
+
+```bash
+pyenv install 3.9.6
 ```
 
 It is HIGHLY recommended that you use pipenv when working on this repo.
