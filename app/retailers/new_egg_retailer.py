@@ -6,6 +6,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from app.constants import NEW_EGG_RETAILER
+from app.constants import PS5_DIGITAL_MSRP
+from app.constants import PS5_DISC_MSRP
 from app.db.models import RetailerInfo
 from app.models.availability import Availability
 from app.models.ps5_version import PS5Version
@@ -35,6 +37,11 @@ class NeweggRetailer(Retailer):
             price_element = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, price_xpath)))
 
             price = price_element.text.replace("$", "")
+
+            if price in PS5_DISC_MSRP:
+                price = PS5_DISC_MSRP
+            elif price in PS5_DIGITAL_MSRP:
+                price = PS5_DIGITAL_MSRP
 
             stock_element = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, stock_xpath)))
 
