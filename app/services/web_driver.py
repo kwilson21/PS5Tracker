@@ -13,6 +13,10 @@ def driver_ctx():
 
     driver = webdriver.Chrome(settings.CHROME_DRIVER_EXECUTABLE_PATH, chrome_options=options)
 
+    # options = webdriver.FirefoxOptions()
+    # options.headless = True
+    # driver = webdriver.Firefox(options=options, service_log_path='/dev/null')
+
     try:
         yield driver
     finally:

@@ -13,7 +13,7 @@ from app.models.ps5_version import PS5Version
 from app.models.retailer import Retailer as RetailerModel
 from app.models.stock_status import StockStatus
 from app.retailers.retailer import Retailer
-from app.services.chrome_driver import driver_ctx
+from app.services.web_driver import driver_ctx
 
 
 class BHRetailer(Retailer):
