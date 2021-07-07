@@ -1,3 +1,3 @@
-import gevent.monkey  # isort:skip
+from gevent import monkey  # isort:skip # noqa
 
-gevent.monkey.patch_all()
+monkey.patch_all()  # isort:skip # noqa

@@ -24,3 +24,8 @@ class Retailer(ABC):
     @abstractmethod
     def attempt_purchase(self, retailer_info: RetailerInfo, price: str) -> bool:
         pass
+
+    @property
+    @abstractmethod
+    def offered_versions(self) -> List[PS5Version]:
+        pass
