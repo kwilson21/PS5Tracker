@@ -13,13 +13,12 @@ from app.services import notifications
 
 
 def _retailer_availability_handler(message: Dict[str, Any]) -> None:
-    retailer_availabilities = json.loads(message["data"])
+    retailer_availabilities = json.loads(message["data"].decode("utf-8"))
     for _retailer in retailer_availabilities:
         try:
             retailer = RetailerModel.from_dict(_retailer)  # type: ignore
         except AttributeError:
             print(message["data"])
-            print(retailer)
             raise
 
         if not retailer.in_stock_availabilities:
