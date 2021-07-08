@@ -11,6 +11,8 @@ def _get_chrome_driver():
     options = uc.ChromeOptions()
     options.binary_location = settings.CHROME_BINARY_LOCATION
     options.headless = True
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
     return uc.Chrome(options=options, service_log_path=os.path.devnull)
 
 
