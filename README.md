@@ -207,7 +207,7 @@ from app.constants import RQ_REDIS_CONN, TARGET_RETAILER
 from rq import Queue
 
 q = Queue(connection=RQ_REDIS_CONN)
-q.enqueue(update_retailer_availabilities, args=(TARGET_RETAILER))
+q.enqueue(update_retailer_availabilities, args=[TARGET_RETAILER])
 ```
 
 This task will get PS5 availabilities from the target website, and store the results in memory.

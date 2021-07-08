@@ -17,6 +17,7 @@ pymysql = "*"
 honcho = "*"
 twilio = "*"
 undetected-chromedriver = "*"
+orjson = "*"
 
 [dev-packages]
 pytest = "*"

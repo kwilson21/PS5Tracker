@@ -18,4 +18,5 @@ def schedule_periodic_jobs():
             args=[retailer_name],
             interval=PERIODIC_JOB_TIME_INTERVAL,
             result_ttl=0,
+            timeout=120,
         )
