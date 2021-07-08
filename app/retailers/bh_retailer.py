@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import List
 
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -32,7 +32,10 @@ class BHRetailer(Retailer):
             else:
                 raise ValueError(f"Incorrect ps5 version {ps5_version}")
 
-            price_xpath = '//*[@id="bh-app"]/section/div/div[2]/div[5]/div/div[2]/div/div/div[2]/div/div/div'
+            price_xpath = (
+                "//*[@id='bh-app']/section/div/div[2]/div[5]/div/div[2]/div/div/div[2]/div/div/div"
+                "[contains(@data-selenium,'pricingPrice')]"
+            )
             in_stock_xpath = (
                 '//*[@id="bh-app"]/section/div/div[2]/div[5]/div/div[2]/div/div/div[4]/div[1]/div[1]/button[1]'
             )
@@ -48,7 +51,7 @@ class BHRetailer(Retailer):
                 stock_element = WebDriverWait(driver, 5).until(
                     EC.presence_of_element_located((By.XPATH, in_stock_xpath))
                 )
-            except NoSuchElementException:
+            except TimeoutException:
                 stock_element = WebDriverWait(driver, 5).until(
                     EC.presence_of_element_located((By.XPATH, out_of_stock_xpath))
                 )

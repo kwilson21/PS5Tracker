@@ -34,8 +34,8 @@ class BestBuyRetailer(Retailer):
             else:
                 raise ValueError(f"Incorrect ps5 version {ps5_version}")
 
-            price_xpath = '//*[@id="pricing-price-91991087"]/div/div/div/div/div[2]/div[1]/div/div/span[1]'
-            stock_xpath = '//*[@id="fulfillment-add-to-cart-button-966791"]/div/div/div/button'
+            price_xpath = "//*[contains(@id,'pricing-price')]/div/div/div/div/div[2]/div[1]/div/div/span[1]"
+            stock_xpath = "//*[contains(@id,'fulfillment-add-to-cart-button')]/div/div/div/button"
 
             price_element = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, price_xpath)))
 

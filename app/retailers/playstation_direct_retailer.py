@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import List
 
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -57,15 +57,14 @@ class PlaystationDirectRetailer(Retailer):
             elif price in PS5_DIGITAL_MSRP:
                 price = PS5_DIGITAL_MSRP
 
-            stock_element = None
             try:
                 stock_element = WebDriverWait(driver, 5).until(
                     EC.presence_of_element_located((By.XPATH, in_stock_xpath))
                 )
-            except NoSuchElementException:
+            except TimeoutException:
                 pass
 
-            if not stock_element:
+            if not stock_element.text:
                 stock_element = WebDriverWait(driver, 5).until(
                     EC.presence_of_element_located((By.XPATH, out_of_stock_xpath))
                 )
