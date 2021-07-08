@@ -57,11 +57,15 @@ class PlaystationDirectRetailer(Retailer):
             elif price in PS5_DIGITAL_MSRP:
                 price = PS5_DIGITAL_MSRP
 
+            stock_element = None
             try:
                 stock_element = WebDriverWait(driver, 5).until(
                     EC.presence_of_element_located((By.XPATH, in_stock_xpath))
                 )
             except NoSuchElementException:
+                pass
+
+            if not stock_element:
                 stock_element = WebDriverWait(driver, 5).until(
                     EC.presence_of_element_located((By.XPATH, out_of_stock_xpath))
                 )
