@@ -11,18 +11,15 @@ from app.services import notifications
 
 
 def _retailer_availability_handler(message: bytes) -> None:
-    if not isinstance(message, dict):
+    if isinstance(message, bytes):
         _message = json.loads(message.decode("utf-8"))
     else:
-        _message = message
+        print(f"Incorrect type for {message=}")
+        return
 
     retailer_availabilities = _message["data"]
     for _retailer in retailer_availabilities:
-        try:
-            retailer = RetailerModel.from_dict(_retailer)  # type: ignore
-        except AttributeError:
-            print(_message["data"])
-            raise
+        retailer = RetailerModel.from_dict(_retailer)  # type: ignore
 
         if not retailer.in_stock_availabilities:
             return
