@@ -17,4 +17,5 @@ def schedule_periodic_jobs():
             func=update_retailer_availabilities,
             args=[retailer_name],
             interval=PERIODIC_JOB_TIME_INTERVAL,
+            result_ttl=0,
         )
