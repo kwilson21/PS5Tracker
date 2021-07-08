@@ -46,8 +46,8 @@ def create_tables() -> None:
             username="test",
             email=settings.TEST_EMAIL,
             phone_number=settings.TEST_PHONE_NUMBER,
-            notify_by_sms=bool(settings.TEST_EMAIL),
-            notify_by_email=settings.TEST_PHONE_NUMBER,
+            notify_by_sms=bool(settings.TEST_PHONE_NUMBER),
+            notify_by_email=bool(settings.TEST_EMAIL),
         )
 
         user.save()
