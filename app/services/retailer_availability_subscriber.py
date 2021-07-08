@@ -10,14 +10,18 @@ from app.models.retailer import Retailer as RetailerModel
 from app.services import notifications
 
 
-def _retailer_availability_handler(_message: bytes) -> None:
-    message = json.loads(_message.decode("utf-8"))
-    retailer_availabilities = message["data"]
+def _retailer_availability_handler(message: bytes) -> None:
+    if not isinstance(message, dict):
+        _message = json.loads(message.decode("utf-8"))
+    else:
+        _message = message
+
+    retailer_availabilities = _message["data"]
     for _retailer in retailer_availabilities:
         try:
             retailer = RetailerModel.from_dict(_retailer)  # type: ignore
         except AttributeError:
-            print(message["data"])
+            print(_message["data"])
             raise
 
         if not retailer.in_stock_availabilities:
