@@ -18,14 +18,14 @@ def get_all_retailer_availabilities() -> List[Dict[str, Any]]:
     for retailer_name in RETAILERS:
         retailer_str = RETAILER_REDIS_CONN.get(retailer_name)
         if retailer_str:
-            retailer_availabilities.append(json.loads(retailer_str))
+            retailer_availabilities.append(json.loads(retailer_str.decode("utf-8")))
     return retailer_availabilities
 
 
 def get_retailer_availability(retailer_name: str) -> Optional[Retailer]:
     retailer_str = RETAILER_REDIS_CONN.get(retailer_name)
     if retailer_str:
-        return Retailer.from_json(retailer_str)  # type: ignore
+        return Retailer.from_json(retailer_str.decode("utf-8"))  # type: ignore
     return None
 
 
