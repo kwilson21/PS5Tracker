@@ -46,7 +46,7 @@ class GameStopRetailer(Retailer):
 
             stock_element = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, stock_xpath)))
 
-            if "Sold Out" in stock_element.text:
+            if "NOT AVAILABLE" in stock_element.text:
                 stock_status = StockStatus.OUT_OF_STOCK
             elif "Add to Cart" in stock_element.text:
                 stock_status = StockStatus.IN_STOCK
