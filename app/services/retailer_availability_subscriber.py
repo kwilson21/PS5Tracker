@@ -1,6 +1,4 @@
 import json
-from typing import Any
-from typing import Dict
 from typing import List
 
 import gevent
@@ -12,8 +10,9 @@ from app.models.retailer import Retailer as RetailerModel
 from app.services import notifications
 
 
-def _retailer_availability_handler(message: Dict[str, Any]) -> None:
-    retailer_availabilities = json.loads(message["data"].decode("utf-8"))
+def _retailer_availability_handler(_message: bytes) -> None:
+    message = json.loads(_message.decode("utf-8"))
+    retailer_availabilities = message["data"]
     for _retailer in retailer_availabilities:
         try:
             retailer = RetailerModel.from_dict(_retailer)  # type: ignore
