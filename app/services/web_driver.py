@@ -1,21 +1,30 @@
+import os
 from contextlib import contextmanager
 
+import undetected_chromedriver.v2 as uc
 from selenium import webdriver
 
 from app import settings
 
 
 def _get_chrome_driver():
-    options = webdriver.ChromeOptions()
+    options = uc.ChromeOptions()
     options.binary_location = settings.CHROME_BINARY_LOCATION
     options.headless = True
-    return webdriver.Chrome(settings.CHROME_DRIVER_EXECUTABLE_PATH, chrome_options=options)
+    return uc.Chrome(options=options, service_log_path=os.path.devnull)
 
 
 def _get_firefox_driver():
+    profile = webdriver.FirefoxProfile()
+    profile.set_preference("dom.webdriver.enabled", False)
+    profile.set_preference("useAutomationExtension", False)
+    profile.update_preferences()
+    desired = webdriver.DesiredCapabilities.FIREFOX
     options = webdriver.FirefoxOptions()
     options.headless = True
-    return webdriver.Firefox(options=options, service_log_path="/dev/null")
+    return webdriver.Firefox(
+        options=options, service_log_path=os.path.devnull, firefox_profile=profile, desired_capabilities=desired
+    )
 
 
 @contextmanager
