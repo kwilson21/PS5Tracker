@@ -63,12 +63,6 @@ Installing pipenv on Mac OS X
 brew install pipenv
 ```
 
-Otherwise use pip to install pipenv
-
-```bash
-py -m pip install --user pipenv
-```
-
 If pipenv isn't avaialble in your shell after installation, you'll need to add the user base's binary directory to your PATH. For more information, refer to the pipenv documentation here: [Pragmatic Installation of Pipenv](https://pipenv.kennethreitz.org/en/latest/install/#pragmatic-installation-of-pipenv)
 
 ## Install Required Packages
@@ -105,7 +99,7 @@ TWILIO_ACCOUNT_SID=
 TWILIO_AUTH_TOKEN=
 TEST_EMAIL=test@test.com
 TEST_PHONE_NUMBER=+15551234567
-WEB_DRIVER=firefox
+WEB_DRIVER=chrome
 ```
 
 ### Pre commit
