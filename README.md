@@ -35,9 +35,26 @@ To install pyenv
 
 ```bash
 curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.profile; . ~/.profile
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+```
+
+Once you have pyenv installed, you will need to add pyenv to your path
+
+```bash
+echo -e 'if shopt -q login_shell; then' \
+      '\n  export PYENV_ROOT="$HOME/.pyenv"' \
+      '\n  export PATH="$PYENV_ROOT/bin:$PATH"' \
+      '\n eval "$(pyenv init --path)"' \
+      '\nfi' >> ~/.bashrc
+echo -e 'if [ -z "$BASH_VERSION" ]; then'\
+      '\n  export PYENV_ROOT="$HOME/.pyenv"'\
+      '\n  export PATH="$PYENV_ROOT/bin:$PATH"'\
+      '\n  eval "$(pyenv init --path)"'\
+      '\nfi' >>~/.profile
+```
+
+Finally, source your profile to save the changes
+```bash
+source .profile
 ```
 
 Install python 3.9.6 (to see other python versions you can install, use `pyenv install --list`)
@@ -52,6 +69,12 @@ Installing pipenv on Ubuntu
 
 ```bash
 python3.9 -m pip install --user pipenv
+```
+
+Lastly, you will need to set your your repo directory to use python3.9 when in the directory
+```bash
+cd ~/repos/PS5Tracker
+pyenv local 3.9.6
 ```
 
 If pipenv isn't avaialble in your shell after installation, you'll need to add the user base's binary directory to your PATH. For more information, refer to the pipenv documentation here: [Pragmatic Installation of Pipenv](https://pipenv.kennethreitz.org/en/latest/install/#pragmatic-installation-of-pipenv)
