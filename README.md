@@ -29,18 +29,15 @@ If you encounter an error at this point, it is likely you have not configured an
 
 Getting started with PS5Tracker, you will need to install Python version 3.9 or above.
 
-You can get the latest version of Python for Windows/Mac here: https://www.python.org/downloads/
-
 On Ubuntu, it is recommended that you use pyenv to manage your python versions
 
 To install pyenv
 
 ```bash
 curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-```
-
-```bash
 echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.profile; . ~/.profile
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 ```
 
 Install python 3.9.6 (to see other python versions you can install, use `pyenv install --list`)
@@ -55,12 +52,6 @@ Installing pipenv on Ubuntu
 
 ```bash
 python3.9 -m pip install --user pipenv
-```
-
-Installing pipenv on Mac OS X
-
-```bash
-brew install pipenv
 ```
 
 If pipenv isn't avaialble in your shell after installation, you'll need to add the user base's binary directory to your PATH. For more information, refer to the pipenv documentation here: [Pragmatic Installation of Pipenv](https://pipenv.kennethreitz.org/en/latest/install/#pragmatic-installation-of-pipenv)
@@ -114,12 +105,6 @@ pre-commit install
 
 ### Installing MySQL
 
-To install MySQL on Windows, simply follow this links: [MySQL Installer 8.0.18](https://dev.mysql.com/downloads/installer/)
-
-If you decide to set up WSL, I suggest using Ubuntu 20.04LTS for your flavor of linux. You can follow [this](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04) guide to setup mysql-server on Ubuntu or follow my instructions below
-
-Once you have Ubuntu installed on your Windows machine, open a bash terminal
-
 To install MySQL on Ubuntu
 
 ```bash
@@ -170,7 +155,7 @@ sudo service redis-server start
 
 ### Install Google Chrome and ChromeDriver
 
-The PS5's retailer services relies on Selenium to scrape PS5 availabilities from websites. To do this, it uses Chrome in headless mode. Because of this, we must ensure our environment has Google Chrome and Chromedriver installed so that Selenium can find them.
+PS5Tracker's retailer services relies on Selenium to scrape PS5 availabilities from websites. To do this, it uses Chrome in headless mode. Because of this, we must ensure our environment has Google Chrome and Chromedriver installed so that Selenium can find them.
 
 I created a script to make this process easy
 
@@ -204,7 +189,7 @@ q = Queue(connection=RQ_REDIS_CONN)
 q.enqueue(update_retailer_availabilities, args=[TARGET_RETAILER])
 ```
 
-This task will get PS5 availabilities from the target website, and store the results in memory.
+This task will get PS5 availabilities from the target website, and store the results in redis.
 
 After updating retailer availabilities, you can query the API to get retailer availabilities by going to http://localhost:5000/docs
 
