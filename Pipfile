@@ -18,9 +18,6 @@ honcho = "*"
 twilio = "*"
 undetected-chromedriver = "*"
 orjson = "*"
-passlib = {extras = ["bcrypt"], version = "*"}
-fastapi-login = "*"
-python-multipart = "*"
 
 [dev-packages]
 pytest = "*"

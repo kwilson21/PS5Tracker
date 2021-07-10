@@ -1,7 +1,4 @@
-import time
-from datetime import datetime
-from datetime import timedelta
-from typing import Dict
+import json
 from typing import List
 
 import gevent
@@ -13,52 +10,40 @@ from app.models.retailer import Retailer as RetailerModel
 from app.services import notifications
 
 
-def _retailer_availability_handler(message: Dict[str, bytes]) -> None:
-    print(f"Recieved {message=}")
-    if isinstance(message, dict):
-        _message = message
+def _retailer_availability_handler(message: bytes) -> None:
+    if isinstance(message, bytes):
+        _message = json.loads(message.decode("utf-8"))
     else:
+        print(f"Incorrect type for {message=}")
         return
 
-    if isinstance(_message["data"], int):
-        return
+    retailer_availabilities = _message["data"]
+    for _retailer in retailer_availabilities:
+        retailer = RetailerModel.from_dict(_retailer)  # type: ignore
 
-    retailer = RetailerModel.from_json(_message["data"])  # type: ignore
+        if not retailer.in_stock_availabilities:
+            return
 
-    if not retailer.in_stock_availabilities:
-        return
+        phone_numbers: List[str] = []
+        emails: List[str] = []
 
-    phone_numbers: List[str] = []
-    emails: List[str] = []
+        for console_preference in ConsolePreference.select().where(
+            ConsolePreference.ps5_version << [v.value for v in retailer.versions_in_stock]
+        ):
+            if console_preference.retailer_info.user.notify_by_sms:
+                phone_numbers.append(console_preference.retailer_info.user.phone_number)
+            if console_preference.retailer_info.user.notify_by_email:
+                emails.append(console_preference.retailer_info.user.email)
 
-    for console_preference in ConsolePreference.select().where(
-        ConsolePreference.ps5_version << [v.value for v in retailer.versions_in_stock]
-    ):
-        notified_at = console_preference.retailer_info.user.notified_at
-        notified_time_ok = (datetime.utcnow() - notified_at) > timedelta(days=1)
+        for phone_number in phone_numbers:
+            gevent.spawn(notifications.sms_retailer_availabilities, retailer, phone_number)
 
-        if console_preference.retailer_info.user.notify_by_sms and notified_time_ok:
-            console_preference.retailer_info.user.notified_at = datetime.utcnow()
-            phone_numbers.append(console_preference.retailer_info.user.phone_number)
-        if console_preference.retailer_info.user.notify_by_email and notified_time_ok:
-            console_preference.retailer_info.user.notified_at = datetime.utcnow()
-            emails.append(console_preference.retailer_info.user.email)
-
-    for phone_number in phone_numbers:
-        gevent.spawn(notifications.sms_retailer_availabilities, retailer, phone_number)
-
-    for email in emails:
-        gevent.spawn(notifications.email_retailer_availabilities, email)
+        for email in emails:
+            gevent.spawn(notifications.email_retailer_availabilities, email)
 
 
 subscriber = RETAILER_REDIS_CONN.pubsub()
 
 subscriber.psubscribe(**{RETAILER_AVAILABILITY_REDIS_CHANNEL: _retailer_availability_handler})
 
-
-def listen_for_messages() -> None:
-    while True:
-        message = subscriber.get_message()
-        if message:
-            _retailer_availability_handler(message)
-        time.sleep(0.001)
+thread = subscriber.run_in_thread(sleep_time=0.001)
