@@ -6,5 +6,5 @@ router = APIRouter()
 
 
 @router.get("/retailers/", tags=["retailers"])
-async def get_retailers():
+def get_retailers():
     return retailer_store.get_all_retailer_availabilities()
