@@ -48,7 +48,7 @@ class AdoramaRetailer(Retailer):
             else:
                 raise Exception(f"Unknown stock status {stock_element.text=}")
 
-        return Availability(version=ps5_version, stock_status=stock_status, price=price, updated_at=datetime.utcnow())
+        return Availability(version=ps5_version, stock_status=stock_status, price=price, updated_at=datetime.now())
 
     def get_availabilities(self) -> List[Availability]:
         return [self.get_availability(ps5_version) for ps5_version in self.offered_versions]

@@ -1,14 +1,16 @@
+from dataclasses import dataclass
 from typing import List
 
-import orjson  # type: ignore
-from pydantic import BaseModel
+from dataclasses_json import dataclass_json
 
 from app.models.availability import Availability
 from app.models.ps5_version import PS5Version
 from app.models.stock_status import StockStatus
 
 
-class Retailer(BaseModel):
+@dataclass_json
+@dataclass(frozen=True, eq=True)
+class Retailer:
     name: str
     availabilities: List[Availability]
 
@@ -21,7 +23,3 @@ class Retailer(BaseModel):
     @property
     def versions_in_stock(self) -> List[PS5Version]:
         return [availability.version for availability in self.in_stock_availabilities]
-
-    @classmethod
-    def from_json(cls, data):
-        return cls(**orjson.loads(data))

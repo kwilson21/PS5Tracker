@@ -37,25 +37,25 @@ def test_update_retailer_availabilities(mocker: MockerFixture, retailer: Retaile
     result = retailer_store.update_retailer_availabilities(retailer)
 
     assert result is True
-    assert r.get(retailer.name).decode("utf-8") == retailer.json()  # type: ignore
+    assert r.get(retailer.name).decode("utf-8") == retailer.to_json()  # type: ignore
 
 
 def test_get_all_retailer_availabilities(mocker: MockerFixture, retailer: Retailer) -> None:
     r = fakeredis.FakeStrictRedis()
     mocker.patch("app.db.retailer_store.RETAILER_REDIS_CONN", r)
 
-    r.set(retailer.name, retailer.json())  # type: ignore
+    r.set(retailer.name, retailer.to_json())  # type: ignore
 
     result = retailer_store.get_all_retailer_availabilities()
 
-    assert result == [json.loads(retailer.json())]  # type: ignore
+    assert result == [json.loads(retailer.to_json())]  # type: ignore
 
 
 def test_get_retailer_availability(mocker: MockerFixture, retailer: Retailer) -> None:
     r = fakeredis.FakeStrictRedis()
     mocker.patch("app.db.retailer_store.RETAILER_REDIS_CONN", r)
 
-    r.set(retailer.name, retailer.json())  # type: ignore
+    r.set(retailer.name, retailer.to_json())  # type: ignore
 
     result = retailer_store.get_retailer_availability(TARGET_RETAILER)
 
@@ -66,7 +66,7 @@ def test_delete_retailer_availability(mocker: MockerFixture, retailer: Retailer)
     r = fakeredis.FakeStrictRedis()
     mocker.patch("app.db.retailer_store.RETAILER_REDIS_CONN", r)
 
-    r.set(retailer.name, retailer.json())  # type: ignore
+    r.set(retailer.name, retailer.to_json())  # type: ignore
 
     result = retailer_store.delete_retailer_availability(TARGET_RETAILER)
 
@@ -78,7 +78,7 @@ def test_delete_all_retailer_availabilities(mocker: MockerFixture, retailer: Ret
     r = fakeredis.FakeStrictRedis()
     mocker.patch("app.db.retailer_store.RETAILER_REDIS_CONN", r)
 
-    r.set(retailer.name, retailer.json())  # type: ignore
+    r.set(retailer.name, retailer.to_json())  # type: ignore
 
     result = retailer_store.delete_all_retailer_availabilities()
 
