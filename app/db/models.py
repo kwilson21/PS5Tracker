@@ -1,3 +1,5 @@
+from datetime import datetime
+from datetime import timedelta
 from typing import Any
 from typing import Dict
 from typing import List
@@ -9,7 +11,9 @@ from app import settings
 from app.constants import PS5_DIGITAL_MSRP
 from app.constants import PS5_DISC_MSRP
 from app.constants import RETAILERS
+from app.db.user_store import get_password_hash
 from app.models.ps5_version import PS5Version
+
 
 if settings.DB_URL:
     mysql_db = connect(settings.DB_URL)
@@ -25,19 +29,20 @@ class BaseModel(peewee.Model):
 
 
 class User(BaseModel):
-    username = peewee.CharField(unique=True)
-    password = peewee.CharField()
     email = peewee.CharField(unique=True)
+    password = peewee.CharField()
     phone_number = peewee.CharField(unique=True)
     notify_by_sms = peewee.BooleanField()
     notify_by_email = peewee.BooleanField()
+    notified_at = peewee.DateTimeField(default=datetime.utcnow() - timedelta(days=2))
+    is_active = peewee.BooleanField(default=True)
 
 
 class RetailerInfo(BaseModel):
     name = peewee.CharField()
-    username = peewee.CharField()
+    email = peewee.CharField()
     password = peewee.CharField()
-    user = peewee.ForeignKeyField(User, backref="retailer_info")
+    user = peewee.ForeignKeyField(User, backref="retailer_info_items")
 
 
 class ConsolePreference(BaseModel):
@@ -47,9 +52,9 @@ class ConsolePreference(BaseModel):
 
 
 def add_user_and_base_preferences(
-    username: str,
     email: str,
     phone_number: str,
+    password: str = "1234",
     retailers: List[str] = RETAILERS,
     notify_by_sms: bool = False,
     notify_by_email: bool = False,
@@ -59,9 +64,9 @@ def add_user_and_base_preferences(
     ],
 ):
     user = User.create(
-        username=username,
         email=email,
         phone_number=phone_number,
+        password=get_password_hash(password),
         notify_by_sms=notify_by_sms,
         notify_by_email=notify_by_email,
     )
@@ -86,7 +91,6 @@ def create_tables() -> None:
 
     if settings.APP_ENV == "development":
         add_user_and_base_preferences(
-            username="test",
             email=settings.TEST_EMAIL,
             phone_number=settings.TEST_PHONE_NUMBER,
             notify_by_sms=bool(settings.TEST_PHONE_NUMBER),
