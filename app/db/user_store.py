@@ -16,12 +16,12 @@ def get_password_hash(password):
 
 
 def get_user(user_id: int):
-    return models.User.get_by_id(user_id)
+    return models.User.filter(models.User.id == user_id).first()
 
 
 @manager.user_loader
 def get_user_by_email(email: str):
-    return models.User.get(models.User.email == email)
+    return models.User.filter(models.User.email == email).first()
 
 
 def get_users(skip: int = 0, limit: int = 100):
@@ -30,6 +30,6 @@ def get_users(skip: int = 0, limit: int = 100):
 
 def create_user(user: schemas.UserCreate):
     hashed_password = get_password_hash(user.password)
-    db_user = models.User(email=user.email, password=hashed_password)
+    db_user = models.User.create(email=user.email, password=hashed_password)
     db_user.save()
     return db_user

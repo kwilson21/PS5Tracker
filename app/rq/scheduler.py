@@ -10,7 +10,7 @@ from app.rq.jobs import update_retailer_availabilities
 scheduler = Scheduler(connection=RQ_REDIS_CONN)
 
 
-def schedule_periodic_jobs():
+def schedule_periodic_jobs() -> None:
     for retailer_name in RETAILERS:
         scheduler.schedule(
             scheduled_time=datetime.utcnow(),
@@ -19,3 +19,7 @@ def schedule_periodic_jobs():
             interval=PERIODIC_JOB_TIME_INTERVAL,
             timeout=240,
         )
+
+
+def clear_all_jobs() -> None:
+    [scheduler.cancel(job) for job in scheduler.get_jobs()]

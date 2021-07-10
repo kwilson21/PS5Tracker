@@ -8,8 +8,8 @@ from app.db.models import drop_tables
 from app.exceptions import NotAuthenticatedException
 from app.routes import retailers
 from app.routes import users
+from app.rq.scheduler import clear_all_jobs
 from app.rq.scheduler import schedule_periodic_jobs
-from app.services.retailer_availability_subscriber import thread
 
 app = FastAPI()
 app.include_router(retailers.router)
@@ -20,6 +20,7 @@ app.add_exception_handler(NotAuthenticatedException, lambda req, exc: RedirectRe
 
 @app.on_event("startup")
 def startup_event():
+    clear_all_jobs()
     schedule_periodic_jobs()
     drop_tables()
     create_tables()
@@ -28,7 +29,6 @@ def startup_event():
 @app.on_event("shutdown")
 def shutdown_event():
     drop_tables()
-    thread.stop()
 
 
 @app.get("/")

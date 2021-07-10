@@ -41,7 +41,11 @@ class TargetRetailer(Retailer):
 
             stock_element = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, stock_xpath)))
 
-            stock_status = StockStatus.OUT_OF_STOCK if "Sold out" in stock_element.text else StockStatus.IN_STOCK
+            out_of_stock_texts = ["Sold out", "Out of stock"]
+
+            out_of_stock = any(out_of_stock_text in stock_element.text for out_of_stock_text in out_of_stock_texts)
+
+            stock_status = StockStatus.OUT_OF_STOCK if out_of_stock else StockStatus.IN_STOCK
 
         return Availability(version=ps5_version, stock_status=stock_status, price=price, updated_at=datetime.now())
 
