@@ -19,7 +19,7 @@ app.add_exception_handler(NotAuthenticatedException, lambda req, exc: RedirectRe
 
 
 @app.on_event("startup")
-def startup_event():
+async def startup_event():
     clear_all_jobs()
     schedule_periodic_jobs()
     drop_tables()
@@ -27,10 +27,10 @@ def startup_event():
 
 
 @app.on_event("shutdown")
-def shutdown_event():
+async def shutdown_event():
     drop_tables()
 
 
 @app.get("/")
-def root() -> Dict[str, str]:
+async def root() -> Dict[str, str]:
     return {"message": "Hello World"}
