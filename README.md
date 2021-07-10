@@ -113,6 +113,12 @@ TWILIO_AUTH_TOKEN=
 TEST_EMAIL=test@test.com
 TEST_PHONE_NUMBER=+15551234567
 WEB_DRIVER=chrome
+SECRET_KEY=
+```
+
+You can generate a secret key for your local environment using the following command
+```bash
+python -c "import os; print(os.urandom(24).hex())"
 ```
 
 ### Pre commit
