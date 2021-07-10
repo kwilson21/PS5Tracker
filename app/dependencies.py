@@ -4,5 +4,5 @@ from app import settings
 from app.exceptions import NotAuthenticatedException
 
 
-manager = LoginManager(settings.SECRET_KEY, token_url="/auth/token")
+manager = LoginManager(settings.SECRET_KEY, token_url="/users/auth/token")
 manager.not_authenticated_exception = NotAuthenticatedException

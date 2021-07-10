@@ -15,7 +15,7 @@ app = FastAPI()
 app.include_router(retailers.router)
 app.include_router(users.router)
 
-app.add_exception_handler(NotAuthenticatedException, lambda req, exc: RedirectResponse(url="users/login"))
+app.add_exception_handler(NotAuthenticatedException, lambda req, exc: RedirectResponse(url="/users/login"))
 
 
 @app.on_event("startup")

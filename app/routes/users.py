@@ -17,7 +17,7 @@ from app.dependencies import manager
 router = APIRouter(prefix="/users", tags=["users"])
 
 
-@router.post("/login")
+@router.post("/auth/token")
 async def login(data: OAuth2PasswordRequestForm = Depends()) -> Dict[str, str]:  # noqa: B008
     email = data.username
     password = data.password
@@ -40,13 +40,13 @@ async def create_user(user: schemas.UserCreate) -> schemas.User:
     return user_store.create_user(user=user)
 
 
-@router.get("/", response_model=List[schemas.User])
+@router.get("/", response_model=List[schemas.User], dependencies=[Depends(manager)])
 async def read_users(skip: int = 0, limit: int = 100) -> List[schemas.User]:
     users = user_store.get_users(skip=skip, limit=limit)
     return users
 
 
-@router.get("/{user_id}", response_model=schemas.User)
+@router.get("/{user_id}", response_model=schemas.User, dependencies=[Depends(manager)])
 async def read_user(user_id: int) -> models.User:
     db_user = user_store.get_user(user_id=user_id)
     if db_user is None:
