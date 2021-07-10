@@ -1,4 +1,5 @@
-from contextvars import ContextVar
+from datetime import datetime
+from datetime import timedelta
 from typing import Any
 from typing import Dict
 from typing import List
@@ -10,22 +11,8 @@ from app import settings
 from app.constants import PS5_DIGITAL_MSRP
 from app.constants import PS5_DISC_MSRP
 from app.constants import RETAILERS
+from app.db.user_store import get_password_hash
 from app.models.ps5_version import PS5Version
-
-db_state_default = {"closed": None, "conn": None, "ctx": None, "transactions": None}
-db_state = ContextVar("db_state", default=db_state_default.copy())
-
-
-class PeeweeConnectionState(peewee._ConnectionState):
-    def __init__(self, **kwargs):
-        super().__setattr__("_state", db_state)
-        super().__init__(**kwargs)
-
-    def __setattr__(self, name, value):
-        self._state.get()[name] = value
-
-    def __getattr__(self, name):
-        return self._state.get()[name]
 
 
 if settings.DB_URL:
@@ -34,8 +21,6 @@ else:
     mysql_db = peewee.MySQLDatabase(
         settings.DB_NAME, user=settings.DB_USER, password=settings.DB_PASS, host=settings.DB_HOST, port=settings.DB_PORT
     )
-
-mysql_db._state = PeeweeConnectionState()
 
 
 class BaseModel(peewee.Model):
@@ -49,6 +34,7 @@ class User(BaseModel):
     phone_number = peewee.CharField(unique=True)
     notify_by_sms = peewee.BooleanField()
     notify_by_email = peewee.BooleanField()
+    notified_at = peewee.DateTimeField(default=datetime.utcnow() - timedelta(days=2))
     is_active = peewee.BooleanField(default=True)
 
 
@@ -68,6 +54,7 @@ class ConsolePreference(BaseModel):
 def add_user_and_base_preferences(
     email: str,
     phone_number: str,
+    password: str = "1234",
     retailers: List[str] = RETAILERS,
     notify_by_sms: bool = False,
     notify_by_email: bool = False,
@@ -79,6 +66,7 @@ def add_user_and_base_preferences(
     user = User.create(
         email=email,
         phone_number=phone_number,
+        password=get_password_hash(password),
         notify_by_sms=notify_by_sms,
         notify_by_email=notify_by_email,
     )

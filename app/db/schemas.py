@@ -1,5 +1,7 @@
+from datetime import datetime
 from typing import Any
 from typing import List
+from typing import Optional
 
 import peewee
 from pydantic import BaseModel
@@ -54,9 +56,10 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     id: int  # noqa: A003
-    phone_number: str
-    notify_by_sms: bool
-    notify_by_email: bool
+    phone_number: Optional[str]
+    notify_by_sms: Optional[bool]
+    notify_by_email: Optional[bool]
+    notified_at: datetime
     is_active: bool
     retailer_info_items: List[RetailerInfo] = []
 
