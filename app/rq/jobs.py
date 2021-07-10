@@ -11,4 +11,4 @@ def update_retailer_availabilities(retailer_name: str) -> None:
 
     retailer_store.update_retailer_availabilities(retailer_availabilities)
 
-    RETAILER_REDIS_CONN.publish(RETAILER_AVAILABILITY_REDIS_CHANNEL, retailer_availabilities.to_json())  # type: ignore
+    RETAILER_REDIS_CONN.publish(RETAILER_AVAILABILITY_REDIS_CHANNEL, retailer_availabilities.json())  # type: ignore
