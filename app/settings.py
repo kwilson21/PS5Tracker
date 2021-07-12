@@ -22,7 +22,7 @@ CHROME_BINARY_LOCATION = which("google-chrome") or "C:\\Program Files\\Google\\C
 WEB_DRIVER = config("WEB_DRIVER", default="chrome")
 REDIS_HOST = config("REDIS_HOST", default="localhost")
 REDIS_PORT = config("REDIS_PORT", cast=int, default=6379)
-REDIS_URL = config("REDISTOGO_URL", default=None)
+REDIS_URL = config("REDIS_URL", default=None)
 URL = config("URL", default="localhost")
 TWILIO_ACCOUNT_SID = config("TWILIO_ACCOUNT_SID", default=None)
 TWILIO_AUTH_TOKEN = config("TWILIO_AUTH_TOKEN", default=None)

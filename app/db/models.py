@@ -96,7 +96,7 @@ def add_user_and_base_preferences(
 
 
 def create_tables() -> None:
-    if not all(t.table_exists() for t in tables):  # type: ignore
+    if not all(mysql_db.table_exists(t) for t in tables):
         mysql_db.create_tables(tables)
 
     if settings.APP_ENV == DEV_ENVIRONMENT:
@@ -109,5 +109,5 @@ def create_tables() -> None:
 
 
 def drop_tables() -> None:
-    if settings.APP_ENV == DEV_ENVIRONMENT and any(t.table_exists() for t in tables):  # type: ignore
+    if settings.APP_ENV == DEV_ENVIRONMENT and all(mysql_db.table_exists(t) for t in tables):
         mysql_db.drop_tables(tables)
