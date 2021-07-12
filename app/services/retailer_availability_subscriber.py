@@ -58,7 +58,7 @@ subscriber.psubscribe(**{RETAILER_AVAILABILITY_REDIS_CHANNEL: _retailer_availabi
 
 def listen_for_messages() -> None:
     while True:
-        message = subscriber.get_message()
+        message = subscriber.get_message(ignore_subscribe_messages=True)
         if message:
             _retailer_availability_handler(message)
         time.sleep(0.001)

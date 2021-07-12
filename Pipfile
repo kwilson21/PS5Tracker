@@ -21,6 +21,7 @@ orjson = "*"
 passlib = {extras = ["bcrypt"], version = "*"}
 fastapi-login = "*"
 python-multipart = "*"
+gunicorn = "*"
 
 [dev-packages]
 pytest = "*"

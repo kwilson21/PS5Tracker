@@ -8,6 +8,7 @@ import peewee
 from playhouse.db_url import connect
 
 from app import settings
+from app.constants import DEV_ENVIRONMENT
 from app.constants import PS5_DIGITAL_MSRP
 from app.constants import PS5_DISC_MSRP
 from app.constants import RETAILERS
@@ -51,6 +52,9 @@ class ConsolePreference(BaseModel):
     retailer_info = peewee.ForeignKeyField(RetailerInfo, backref="console_preferences")
 
 
+tables = [User, RetailerInfo, ConsolePreference]
+
+
 def add_user_and_base_preferences(
     email: str,
     phone_number: str,
@@ -63,6 +67,11 @@ def add_user_and_base_preferences(
         {"ps5_version": PS5Version.DISC, "price": PS5_DISC_MSRP},
     ],
 ):
+    user = User.get_or_none(User.email == email)
+
+    if user:
+        return
+
     user = User.create(
         email=email,
         phone_number=phone_number,
@@ -87,9 +96,10 @@ def add_user_and_base_preferences(
 
 
 def create_tables() -> None:
-    mysql_db.create_tables([User, RetailerInfo, ConsolePreference])
+    if not all(mysql_db.table_exists(t) for t in tables):
+        mysql_db.create_tables(tables)
 
-    if settings.APP_ENV == "development":
+    if settings.APP_ENV == DEV_ENVIRONMENT:
         add_user_and_base_preferences(
             email=settings.TEST_EMAIL,
             phone_number=settings.TEST_PHONE_NUMBER,
@@ -99,5 +109,5 @@ def create_tables() -> None:
 
 
 def drop_tables() -> None:
-    if settings.APP_ENV == "development":
-        mysql_db.drop_tables([User, RetailerInfo, ConsolePreference])
+    if settings.APP_ENV == DEV_ENVIRONMENT and all(mysql_db.table_exists(t) for t in tables):
+        mysql_db.drop_tables(tables)

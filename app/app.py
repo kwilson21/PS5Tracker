@@ -22,7 +22,6 @@ app.add_exception_handler(NotAuthenticatedException, lambda req, exc: RedirectRe
 async def startup_event():
     clear_all_jobs()
     schedule_periodic_jobs()
-    drop_tables()
     create_tables()
 
 
