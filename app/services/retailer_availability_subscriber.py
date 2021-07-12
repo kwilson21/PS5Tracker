@@ -9,6 +9,8 @@ import gevent
 from app.constants import RETAILER_AVAILABILITY_REDIS_CHANNEL
 from app.constants import RETAILER_REDIS_CONN
 from app.db.models import ConsolePreference
+from app.db.models import RetailerInfo
+from app.db.models import User
 from app.models.retailer import Retailer as RetailerModel
 from app.services import notifications
 
@@ -23,7 +25,7 @@ def _retailer_availability_handler(message: Dict[str, bytes]) -> None:
     if isinstance(_message["data"], int):
         return
 
-    retailer = RetailerModel.from_json(_message["data"])  # type: ignore
+    retailer = RetailerModel.parse_raw(_message["data"])
 
     if not retailer.in_stock_availabilities:
         return
@@ -31,18 +33,30 @@ def _retailer_availability_handler(message: Dict[str, bytes]) -> None:
     phone_numbers: List[str] = []
     emails: List[str] = []
 
-    for console_preference in ConsolePreference.select().where(
-        ConsolePreference.ps5_version << [v.value for v in retailer.versions_in_stock]
-    ):
-        notified_at = console_preference.retailer_info.user.notified_at
+    query = (
+        User.select()
+        .join(RetailerInfo)
+        .join(ConsolePreference)
+        .where(
+            (User.notify_by_sms == True | User.notify_by_email == True)  # noqa: E712
+            and (RetailerInfo.name == retailer.name)
+            and ConsolePreference.ps5_version << [v.value for v in retailer.versions_in_stock]
+        )
+        .group_by(User)
+    )
+
+    for user in query:
+        notified_at = user.notified_at
         notified_time_ok = (datetime.utcnow() - notified_at) > timedelta(days=1)
 
-        if console_preference.retailer_info.user.notify_by_sms and notified_time_ok:
-            console_preference.retailer_info.user.notified_at = datetime.utcnow()
-            phone_numbers.append(console_preference.retailer_info.user.phone_number)
-        if console_preference.retailer_info.user.notify_by_email and notified_time_ok:
-            console_preference.retailer_info.user.notified_at = datetime.utcnow()
-            emails.append(console_preference.retailer_info.user.email)
+        if user.notify_by_sms and notified_time_ok:
+            user.notified_at = datetime.utcnow()
+            user.save()
+            phone_numbers.append(user.phone_number)
+        if user.notify_by_email and notified_time_ok:
+            user.notified_at = datetime.utcnow()
+            user.save()
+            emails.append(user.email)
 
     for phone_number in phone_numbers:
         gevent.spawn(notifications.sms_retailer_availabilities, retailer, phone_number)
