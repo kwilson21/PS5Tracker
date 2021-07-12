@@ -1,5 +1,6 @@
 import os
 from contextlib import contextmanager
+from typing import Union
 
 import undetected_chromedriver.v2 as uc
 from selenium import webdriver
@@ -7,7 +8,7 @@ from selenium import webdriver
 from app import settings
 
 
-def _get_chrome_driver():
+def _get_chrome_driver() -> uc.Chrome:
     options = uc.ChromeOptions()
     options.binary_location = settings.CHROME_BINARY_LOCATION
     options.headless = True
@@ -18,7 +19,7 @@ def _get_chrome_driver():
     return uc.Chrome(options=options, service_log_path=os.path.devnull)
 
 
-def _get_firefox_driver():
+def _get_firefox_driver() -> webdriver.Firefox:
     profile = webdriver.FirefoxProfile()
     profile.set_preference("dom.webdriver.enabled", False)
     profile.set_preference("useAutomationExtension", False)
@@ -32,7 +33,7 @@ def _get_firefox_driver():
 
 
 @contextmanager
-def driver_ctx(use_driver: str = settings.WEB_DRIVER):
+def driver_ctx(use_driver: str = settings.WEB_DRIVER) -> Union[uc.Chrome, webdriver.Firefox]:
     if use_driver == "chrome":
         driver = _get_chrome_driver()
     elif use_driver == "firefox":

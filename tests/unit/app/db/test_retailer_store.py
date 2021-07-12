@@ -1,4 +1,3 @@
-import json
 from datetime import datetime
 from datetime import timedelta
 from datetime import timezone
@@ -48,7 +47,7 @@ def test_get_all_retailer_availabilities(mocker: MockerFixture, retailer: Retail
 
     result = retailer_store.get_all_retailer_availabilities()
 
-    assert result == [json.loads(retailer.json())]  # type: ignore
+    assert result == [retailer]  # type: ignore
 
 
 def test_get_retailer_availability(mocker: MockerFixture, retailer: Retailer) -> None:
