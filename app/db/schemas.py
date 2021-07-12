@@ -3,9 +3,12 @@ from typing import Any
 from typing import List
 from typing import Optional
 
+import orjson  # type: ignore
 import peewee
 from pydantic import BaseModel
 from pydantic.utils import GetterDict
+
+from app.utils.json_utils import orjson_dumps
 
 
 class PeeweeGetterDict(GetterDict):
@@ -25,15 +28,25 @@ class ConsolePreference(BaseModel):
     class Config:
         orm_mode = True
         getter_dict = PeeweeGetterDict
+        json_loads = orjson.loads
+        json_dumps = orjson_dumps
 
 
 class RetailerInfoBase(BaseModel):
     name: str
     email: str
 
+    class Config:
+        json_loads = orjson.loads
+        json_dumps = orjson_dumps
+
 
 class RetailerInfoCreate(RetailerInfoBase):
     password: str
+
+    class Config:
+        json_loads = orjson.loads
+        json_dumps = orjson_dumps
 
 
 class RetailerInfo(RetailerInfoBase):
@@ -44,14 +57,24 @@ class RetailerInfo(RetailerInfoBase):
     class Config:
         orm_mode = True
         getter_dict = PeeweeGetterDict
+        json_loads = orjson.loads
+        json_dumps = orjson_dumps
 
 
 class UserBase(BaseModel):
     email: str
 
+    class Config:
+        json_loads = orjson.loads
+        json_dumps = orjson_dumps
+
 
 class UserCreate(UserBase):
     password: str
+
+    class Config:
+        json_loads = orjson.loads
+        json_dumps = orjson_dumps
 
 
 class User(UserBase):
@@ -66,3 +89,5 @@ class User(UserBase):
     class Config:
         orm_mode = True
         getter_dict = PeeweeGetterDict
+        json_loads = orjson.loads
+        json_dumps = orjson_dumps
