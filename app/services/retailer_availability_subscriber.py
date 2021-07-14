@@ -13,6 +13,7 @@ from app.db.models import RetailerInfo
 from app.db.models import User
 from app.models.retailer import Retailer as RetailerModel
 from app.services import notifications
+from app.settings import NOTIFICATIONS_COOLDOWN_TIME
 
 
 def _retailer_availability_handler(message: Dict[str, bytes]) -> None:
@@ -47,7 +48,7 @@ def _retailer_availability_handler(message: Dict[str, bytes]) -> None:
 
     for user in query:
         notified_at = user.notified_at
-        notified_time_ok = (datetime.utcnow() - notified_at) > timedelta(days=1)
+        notified_time_ok = (datetime.utcnow() - notified_at) > timedelta(minutes=NOTIFICATIONS_COOLDOWN_TIME)
 
         if user.notify_by_sms and notified_time_ok:
             user.notified_at = datetime.utcnow()
