@@ -47,7 +47,7 @@ def _retailer_availability_handler(message: Dict[str, bytes]) -> None:
 
     for user in query:
         notified_at = user.notified_at
-        notified_time_ok = (datetime.utcnow() - notified_at) > timedelta(days=1)
+        notified_time_ok = (datetime.utcnow() - notified_at) > timedelta(minutes=30)
 
         if user.notify_by_sms and notified_time_ok:
             user.notified_at = datetime.utcnow()

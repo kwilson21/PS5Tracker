@@ -2,10 +2,10 @@ from datetime import datetime
 
 from rq_scheduler import Scheduler
 
-from app.constants import PERIODIC_JOB_TIME_INTERVAL
 from app.constants import RETAILERS
 from app.constants import RQ_REDIS_CONN
 from app.rq.jobs import update_retailer_availabilities
+from app.settings import PERIODIC_JOB_TIME_INTERVAL
 
 scheduler = Scheduler(connection=RQ_REDIS_CONN)
 
