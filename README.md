@@ -64,7 +64,7 @@ pyenv install 3.9.6
 ```
 
 
-Next, you will need to set your your repo directory to use python3.9 when in the directory
+Next, you will need to set your repo directory to use python3.9 when in the directory
 ```bash
 cd ~/repos/PS5Tracker
 pyenv local 3.9.6
