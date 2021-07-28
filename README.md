@@ -60,7 +60,7 @@ source .profile
 Install python 3.9.6 (to see other python versions you can install, use `pyenv install --list`)
 
 ```bash
-sudo apt install libbz2-dev libssl-dev build-essential
+sudo apt install zlib1g-dev libbz2-dev libssl-dev build-essential
 pyenv install 3.9.6
 ```
 
