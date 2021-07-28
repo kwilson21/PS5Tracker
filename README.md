@@ -74,10 +74,8 @@ pyenv local 3.9.6
 It is HIGHLY recommended that you use pipenv when working on this repo
 
 ```bash
-python -m pip install --user pipenv
+python -m pip install pipenv
 ```
-
-If pipenv isn't available in your shell after installation, you'll need to add the user base's binary directory to your PATH. For more information, refer to the pipenv documentation here: [Pragmatic Installation of Pipenv](https://pipenv.kennethreitz.org/en/latest/install/#pragmatic-installation-of-pipenv)
 
 ## Install Required Packages
 
