@@ -137,6 +137,8 @@ We have a configuration for
 following command:
 
 ```bash
+cd ~/repos/PS5Tracker
+pipenv shell
 pre-commit install
 ```
 
