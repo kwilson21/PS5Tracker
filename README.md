@@ -70,13 +70,14 @@ echo -e 'if [ -z "$BASH_VERSION" ]; then'\
 
 Finally, source your profile to save the changes
 ```bash
-source .profile
+source ~/.profile
 ```
 
 Install python 3.9.6 (to see other python versions you can install, use `pyenv install --list`)
 
 ```bash
-sudo apt install zlib1g-dev libbz2-dev libssl-dev build-essential
+sudo apt update
+sudo apt install build-essential gdb lcov libbz2-dev libffi-dev libgdbm-dev liblzma-dev libncurses5-dev libreadline-dev libsqlite3-dev libssl-dev lzma lzma-dev tk-dev uuid-dev zlib1g-dev
 pyenv install 3.9.6
 ```
 
