@@ -39,7 +39,7 @@ cd
 mkdir repos
 cd repos
 git clone git@github.com:kwilson21/PS5Tracker.git
-``
+```
 
 ## Setting Up Your Environment
 
