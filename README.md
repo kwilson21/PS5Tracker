@@ -91,7 +91,8 @@ pyenv local 3.9.6
 It is HIGHLY recommended that you use pipenv when working on this repo
 
 ```bash
-python -m pip install pipenv
+cd ~/repos/PS5Tracker
+pip install pipenv
 ```
 
 ## Install Required Packages
