@@ -14,16 +14,32 @@ To set up WSL in Windows 10/11, follow these instructions to get WSL set up on y
 
 ## Cloning the Repository
 
-If you haven't already, you will need to clone the `kwilson21/PS5Tracker` GitHub repository to your local machine. This can be accomplished by running the following:
+If you haven't already, you will need to clone the `kwilson21/PS5Tracker` GitHub repository to your local machine. 
+
+First generate an SSH key:
+
+```bash
+ssh-keygen -t rsa -b 4096
+```
+
+When generating the SSH key, it is suggested that you keep a default file name and not set a passphrase as you will need to enter it everytime you use a git command.
+
+Once you generate an SSH key, copy the SSH key to your clipboard:
+
+```bash
+cat ~/.ssh/id_rsa.pub
+```
+
+Once you have the key in your clipboard, head over to GitHub, select Settings -> SSH and GPG keys and add a new SSH key. For more details, see [Generating a new SSH key and adding it to GitHub](https://askubuntu.com/questions/527551/how-to-access-a-git-repository-using-ssh).
+
+Once you have linked the SSH key to your GitHub account, clone the GitHub repo:
 
 ```bash
 cd
 mkdir repos
 cd repos
 git clone git@github.com:kwilson21/PS5Tracker.git
-```
-
-If you encounter an error at this point, it is likely you have not configured an SSH key with GitHub, to resolve this issue, see [Generating a new SSH key and adding it to GitHub](https://askubuntu.com/questions/527551/how-to-access-a-git-repository-using-ssh) for more details
+``
 
 ## Setting Up Your Environment
 
