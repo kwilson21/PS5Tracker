@@ -97,19 +97,11 @@ pip install pipenv
 
 ## Install Required Packages
 
-If you are using pipenv and are on a dev environment
-
 ```bash
 cd ~/repos/PS5Tracker
 pipenv install --dev
 ```
 
-On a production environment
-
-```bash
-cd ~/repos/PS5Tracker
-pipenv install
-```
 
 ## Configuring Environment Variables
 
