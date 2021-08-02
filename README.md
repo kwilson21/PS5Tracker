@@ -16,7 +16,7 @@ To set up WSL in Windows 10/11, follow these instructions to get WSL set up on y
 
 If you haven't already, you will need to clone the `kwilson21/PS5Tracker` GitHub repository to your local machine. 
 
-First generate an SSH key:
+First generate an SSH key
 
 ```bash
 ssh-keygen -t rsa -b 4096
@@ -24,7 +24,7 @@ ssh-keygen -t rsa -b 4096
 
 When generating the SSH key, it is suggested that you keep a default file name and not set a passphrase as you will need to enter it everytime you use a git command.
 
-Once you generate an SSH key, copy the SSH key to your clipboard:
+Once you generate an SSH key, copy the SSH key to your clipboard
 
 ```bash
 cat ~/.ssh/id_rsa.pub
@@ -32,7 +32,7 @@ cat ~/.ssh/id_rsa.pub
 
 Once you have the key in your clipboard, head over to GitHub, select Settings -> SSH and GPG keys and add a new SSH key. For more details, see [Generating a new SSH key and adding it to GitHub](https://askubuntu.com/questions/527551/how-to-access-a-git-repository-using-ssh).
 
-Once you have linked the SSH key to your GitHub account, clone the GitHub repo:
+Once you have linked the SSH key to your GitHub account, clone the GitHub repo
 
 ```bash
 cd
@@ -76,26 +76,20 @@ source ~/.profile
 Install python 3.9.6 (to see other python versions you can install, use `pyenv install --list`)
 
 ```bash
-sudo apt update
-sudo apt install build-essential gdb lcov libbz2-dev libffi-dev libgdbm-dev liblzma-dev libncurses5-dev libreadline-dev libsqlite3-dev libssl-dev lzma lzma-dev tk-dev uuid-dev zlib1g-dev
+sudo apt update -y
+sudo apt install -y build-essential gdb lcov libbz2-dev libffi-dev libgdbm-dev liblzma-dev libncurses5-dev libreadline-dev libsqlite3-dev libssl-dev lzma lzma-dev tk-dev uuid-dev zlib1g-dev
 pyenv install 3.9.6
 ```
 
 
-Next, you will need to set your repo directory to use python3.9 when in the directory
+Next, you will need to set your repo directory to use python3.9 when in the directory and install pipenv
 ```bash
 cd ~/repos/PS5Tracker
 pyenv local 3.9.6
-```
-
-It is HIGHLY recommended that you use pipenv when working on this repo
-
-```bash
-cd ~/repos/PS5Tracker
 pip install pipenv
 ```
 
-## Install Required Packages
+Once you have pipenv installed, use pipenv to install the required packages
 
 ```bash
 cd ~/repos/PS5Tracker
@@ -134,7 +128,7 @@ python -c "import os; print(os.urandom(24).hex())"
 
 We have a configuration for
 [pre-commit](https://github.com/pre-commit/pre-commit), to add the hook run the
-following command:
+following command
 
 ```bash
 cd ~/repos/PS5Tracker
@@ -147,34 +141,20 @@ pre-commit install
 To install MySQL on Ubuntu
 
 ```bash
-sudo apt install mysql-server
+sudo apt install -y mysql-server
 ```
 
-After installation, start the MySQL server:
+After installation, start the MySQL server
 
 ```bash
 sudo service mysql start
 ```
 
-After installing, run the security script with `sudo`
+Lastly, before running the app, you must create the database that you will use and set a password for your root account
 
 ```bash
-sudo mysql_secure_installation
-```
-
-This will take you through a series of prompts where you can make some changes to your MySQL installation’s security options. The first prompt will ask whether you’d like to set up the Validate Password Plugin, which can be used to test the password strength of new MySQL users before deeming them valid.
-
-Lastly, before running the app, you must create the database that you will use
-
-```bash
-sudo mysql -u root -p
+sudo mysql -u root
 mysql> CREATE DATABASE test;
-```
-
-If you are getting permission denied errors in the app when trying to connect to the db using root, use the following command to fix the issue (set the password to whatever you like)
-
-```bash
-sudo mysql -u root -p
 mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1234';
 ```
 
@@ -186,7 +166,7 @@ You will need to install Redis to test RQ jobs and test retailer availability co
 sudo apt install redis-server
 ```
 
-After installation, start the redis server:
+After installation, start the redis server
 
 ```bash
 sudo service redis-server start
